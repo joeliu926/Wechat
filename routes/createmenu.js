@@ -19,7 +19,8 @@ router.get('/', function(req, res, next) {
         console.log(accesstoken);
         fileUtil.writeJSON(sPath,JSON.stringify(accesstoken));
     }*/
-    testtoken.gettoken(req,res,next);
+    testtoken.getuserinfo(req,res,next);
+
     //res.send('validation failed');
 });
 

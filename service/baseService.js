@@ -26,17 +26,17 @@ function getmenu(req, res, next){
             res.send(error);
         }
         else {
-           // console.log(JSON.parse(body));
+            console.log(JSON.parse(body));
             res.send(JSON.parse(body));
         }
     }
     httpClient(opt);
 }
-function gettoken(req, res, next){
-    console.log("get access token===========");
+function getuserinfo(req, res, next){
+    console.log("get info --------");
     defualtCfg.method="GET";
     var opt=appUtil.extend({},defualtCfg);
-    opt.url+=weChatAPI.accesstoken.url;
+    opt.url+=weChatAPI.userinfo.url;
     console.log(opt.url);
     opt.callBack=function(error, response, body){
         if(error)
@@ -44,26 +44,49 @@ function gettoken(req, res, next){
             res.send(error);
         }
         else {
-            var tokenUpdateTime=accesstoken.last_update_time;
-            if(!tokenUpdateTime||new Date(tokenUpdateTime)=="Invalid Date"){
-                return false;
+            console.log(JSON.parse(body));
+            res.send(JSON.parse(body));
+        }
+    }
+    httpClient(opt);
+}
+function gettoken(req, res, next){
+    var tokenUpdateTime=accesstoken.last_update_time;
+    if(!tokenUpdateTime||new Date(tokenUpdateTime)=="Invalid Date"){
+        return false;
+    }
+    var timeDiff= new Date().getTime()-(new Date(accesstoken.last_update_time).getTime());
+    if(timeDiff>accesstoken.token_diff_time){
+        console.log("get token data++++++++++++++++");
+        defualtCfg.method="GET";
+        var opt=appUtil.extend({},defualtCfg);
+        opt.url+=weChatAPI.accesstoken.url;
+        console.log(opt.url);
+        opt.callBack=function(error, response, body){
+            if(error)
+            {
+                res.send(error);
             }
-            var timeDiff= new Date().getTime()-(new Date(accesstoken.last_update_time).getTime());
-            if(timeDiff>accesstoken.token_diff_time){
+            else {
                 var sPath='public/access_token.json';
                 accesstoken.last_update_time=new Date().getTime();
                 accesstoken.access_token=JSON.parse(body).access_token;
                 //console.log(accesstoken);
                 fileUtil.writeJSON(sPath,JSON.stringify(accesstoken));
+                // res.send(JSON.parse(body));
             }
-            return true;
-
-           // res.send(JSON.parse(body));
         }
+        httpClient(opt);
+    } else {
+        console.log("exist token data----------------");
     }
-    httpClient(opt);
+    return true;
+
+
+
 }
 module.exports = {
     gettoken: gettoken,
-    getmenu:getmenu
+    getmenu:getmenu,
+    getuserinfo:getuserinfo
 }

@@ -32,6 +32,10 @@ var config={
     },
     customer:{
 
+    },
+    userinfo:{
+        method:"get",
+        url:"https://api.weixin.qq.com/cgi-bin/user/info?access_token="+accessToken+"&openid=oh3NkxCV0gJ0-GtvC7LO5hKBsKio&lang=zh_CN"
     }
 
 };
