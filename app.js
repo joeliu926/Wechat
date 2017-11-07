@@ -4,9 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var baseSevice=require('./service/baseService');
 var wechatapp = require('./wechat');
 var index = require('./routes/index');
 var users = require('./routes/users');
+var serverval=require('./routes/serverval');
+var createmenu=require('./routes/createmenu');
 
 var app = express();
 app.use(express.query());
@@ -24,7 +27,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-wechatapp.initwechat(app);
+app.use('/serverval',serverval);
+app.use('/createmenu',createmenu);
+
+//wechatapp.initwechat(app);
+
+app.use(function(req, res, next) {
+
+    baseSevice.gettoken(req,res,next);
+    //next();
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
