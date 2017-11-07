@@ -3,7 +3,7 @@ var router = express.Router();
 var crypto = require('crypto');
 var wconfig=require('../config/wechat_config');
 var fileUtil=require('../utils/fileUtils');
-var testtoken=require('../service/baseService');
+var testtoken=require('../service/menuService');
 
 router.get('/', function(req, res, next) {
 
@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
         console.log(accesstoken);
         fileUtil.writeJSON(sPath,JSON.stringify(accesstoken));
     }*/
-    testtoken.getuserinfo(req,res,next);
+    testtoken.setmenu(req,res,next);
 
     //res.send('validation failed');
 });

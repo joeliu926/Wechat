@@ -7,14 +7,14 @@ var querystring = require("querystring");
 var requestType={
     'multipart/form-data':function(arg){
         request.post({url:arg.url, formData:arg.data,headers: {
-            "authorization":arg.authorization
+            //"authorization":arg.authorization
         }}, function (error, response, body) {
             util.isFunction(arg.callBack)&&arg.callBack(error, response, body);
         })
     },
     'application/x-www-form-urlencoded':function(arg){
         request.post({url:arg.url, form:arg.data,headers: {
-            "authorization":arg.authorization
+           // "authorization":arg.authorization
         }}, function(error, response, body) {
             util.isFunction(arg.callBack)&&arg.callBack(error, response, body);
         })
@@ -26,8 +26,8 @@ var requestType={
             method:arg.method, //"POST",
             //json: true,
             headers: {
-                "content-type": "application/json",
-                "authorization":arg.authorization
+                "content-type": "application/json"
+                //"authorization":arg.authorization
             },
             body:JSON.stringify(arg.data)
         }, function(error, response, body) {
@@ -50,9 +50,7 @@ module.exports = function(arg){
     }else{
         var params=querystring.stringify(arg.data);
         arg.url+=/\?+/.test(arg.url)?'&'+params:'?'+params;
-        request({url:arg.url,headers: {
-            "authorization":arg.authorization
-        }}, function (error, response, body) {
+        request({url:arg.url}, function (error, response, body) {
             util.isFunction(arg.callBack)&&arg.callBack(error, response, body);
         })
     }
