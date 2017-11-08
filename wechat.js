@@ -12,7 +12,20 @@ var config = {
 function initwechat(app) {
     app.use('/', wechat(config, function (req, res, next) {
         var message = req.weixin;
-        res.reply('bbb');
+        res.reply(
+            [  {
+                title: '你好boy',
+                description: '这是一个测试的对话',
+                picurl: 'https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=4088918123,1681772807&fm=85&s=EBAF31623EFD79ABDEC411E10300E020',
+                url: 'https://www.baidu.com/'
+            },
+                {
+                    title: '你好girl',
+                    description: '这是第二个测试信息',
+                    picurl: 'https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=4088918123,1681772807&fm=85&s=EBAF31623EFD79ABDEC411E10300E020',
+                    url: 'https://www.baidu.com/'
+                }]
+        );
     }));
 }
 

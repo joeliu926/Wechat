@@ -36,6 +36,17 @@ var config={
     userinfo:{
         method:"get",
         url:"https://api.weixin.qq.com/cgi-bin/user/info?access_token="+accessToken+"&openid=oh3NkxCV0gJ0-GtvC7LO5hKBsKio&lang=zh_CN"
+    },
+    authorize:{
+        authorizecode:{
+            method:"",
+            url:""
+        },
+        augetopenid:{
+            method:"POST",
+            url:"https://api.weixin.qq.com/sns/oauth2/access_token?appid="+weConfig.appid+"&secret="+weConfig.appSecret+"&code=_CODE_&grant_type=authorization_code"
+        }
+
     }
 
 };

@@ -1,19 +1,31 @@
-{"button":[
-  {
-    "name":"咨询助手",
-    "sub_button":[{
-       "type":"miniprogram",
-       "name":"案例助手",
-      "url":"http://mp.weixin.qq.com",
-      "appid":"wx0d601009b9b6ac71",
-      "pagepath":"pages/view/index"
-    },{
-      "type":"view",
-      "name":"打卡助手",
-      "url":"http://mp.weixin.qq.com"
-    }]},{
-    "type":"view",
-    "name":"客户中心",
-    "url":"http://mp.weixin.qq.com",
-    "key":"MC_CUSTOMER_CENTER"}
-]}
+{
+  "button": [
+    {
+      "name": "咨询助手",
+      "sub_button": [
+        {
+          "type": "miniprogram",
+          "name": "案例助手",
+          "url": "http://mp.weixin.qq.com",
+          "appid": "wx0d601009b9b6ac71",
+          "pagepath": "pages/view/index"
+        },
+        {
+          "type": "view",
+          "name": "测试授权",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1d024d4ce5f7e303&redirect_uri=https%3a%2f%2f27478500.qcloud.la%2fwx%2fusers&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+        },
+        {
+          "type": "click",
+          "name": "打卡助手",
+          "key": "MC_CLOCK_IN"
+        }
+      ]
+    },
+    {
+      "type": "click",
+      "name": "客户中心",
+      "key": "MC_CUSTOMER_CENTER"
+    }
+  ]
+}
