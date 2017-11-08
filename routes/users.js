@@ -4,7 +4,7 @@ var userService=require('../service/userService');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     var ucode= req.query.code;
-    userService.getoauthopenid(code);
+    userService.getoauthopenid(ucode);
   res.send('respond with a resource  user data');
 });
 

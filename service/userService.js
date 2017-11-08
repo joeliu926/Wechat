@@ -17,7 +17,7 @@ function getoauthopenid(code){
     defualtCfg.method="POST";
     var opt=appUtil.extend({},defualtCfg);
     opt.data=menuconfig;
-    opt.url+=weChatAPI.authorize.augetopenid.url;
+    opt.url+=weChatAPI.authorize.augetopenid.url.replace("_CODE_",code);
     console.log(opt.url);
     opt.callBack=function(error, response, body){
         if(error)
