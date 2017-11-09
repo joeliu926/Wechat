@@ -22,7 +22,6 @@ function getParamsStr(){
                 arr.push(k+"="+v);
             }
         }
-
     }
     return arr.join("&");
 }

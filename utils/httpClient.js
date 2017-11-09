@@ -6,16 +6,12 @@ const util = require('util');
 var querystring = require("querystring");
 var requestType={
     'multipart/form-data':function(arg){
-        request.post({url:arg.url, formData:arg.data,headers: {
-            //"authorization":arg.authorization
-        }}, function (error, response, body) {
+        request.post({url:arg.url, formData:arg.data}, function (error, response, body) {
             util.isFunction(arg.callBack)&&arg.callBack(error, response, body);
         })
     },
     'application/x-www-form-urlencoded':function(arg){
-        request.post({url:arg.url, form:arg.data,headers: {
-           // "authorization":arg.authorization
-        }}, function(error, response, body) {
+        request.post({url:arg.url, form:arg.data}, function(error, response, body) {
             util.isFunction(arg.callBack)&&arg.callBack(error, response, body);
         })
     },
@@ -27,7 +23,6 @@ var requestType={
             //json: true,
             headers: {
                 "content-type": "application/json"
-                //"authorization":arg.authorization
             },
             body:JSON.stringify(arg.data)
         }, function(error, response, body) {
