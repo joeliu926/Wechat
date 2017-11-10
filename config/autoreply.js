@@ -3,6 +3,24 @@ function autoReply(requestData, info) {
         case 'text':
             var resMsg = '';
             break;
+        case 'text':
+            var resMsg = '';
+            break;
+        case 'text':
+            var resMsg = '';
+            break;
+        case 'text':
+            var resMsg = '';
+            break;
+        case 'text':
+            var resMsg = '';
+            break;
+        case 'text':
+            var resMsg = '';
+            break;
+        default :
+            var resMsg = '';
+            break;
     }
 
     return resMsg;

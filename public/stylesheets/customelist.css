@@ -1,0 +1,11 @@
+.search-body-root{ border-bottom: 1px solid #e8e8e8;padding:10px 10px 10px 10px; width: 100%;}
+.search-body-div{display: inline-block;width: 10%;}
+.search-body-right{float: right;line-height:100px; text-align:left; width: 40%;font-size: 32px;color:#fd8062; vertical-align: middle; text-align:right;}
+.search-body-font{ float:left; color:#333333; width: 40%;line-height:100px;font-size: 32px; font-weight: bold; padding-left: 20px;}
+.search-title{padding:20px 10px 10px 18px;width: 100%;height: 90px; border-bottom: 1px solid #e8e8e8;
+}
+.search-title-date{display: inline-block; text-align: center; position: relative;}
+.search-title-date-input{border: 1px solid #999999; font-weight: bold; width:100%; height:65px; font-size:32px;color:#666666; border-radius: 35px; text-align: center;}
+.search-title-mid{width: 10%;display: inline-block; text-align: center;font-size:28px;color:#999999;}
+.search-title-img{width: 48px; height: 48px;position: absolute; left: 18px;top:7px;}
+

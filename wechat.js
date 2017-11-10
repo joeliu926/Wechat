@@ -12,7 +12,16 @@ var config = {
 function initwechat(app) {
     app.use('/', wechat(config, function (req, res, next) {
         var message = req.weixin;
-        res.reply('bbb');
+        console.log( message);
+        res.reply(
+            {
+                "type": "miniprogram",
+                "name": "案例助手",
+                "url": "http://mp.weixin.qq.com",
+                "appid": "wx0d601009b9b6ac71",
+                "pagepath": "pages/view/index"
+            }
+        );
     }));
 }
 

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>客户资料</title>
+    <link rel='stylesheet' href='/stylesheets/customedetail.css' />
+</head>
+<body>
+<div class="search-detail">
+    <div class="search-detail-list">
+        <div class="search-right">来源</div>
+        <div style="float: right;">
+            <select class="search-input">
+                <option value ="volvo">Volvo</option>
+                <option value ="saab">Saab</option>
+                <option value="opel">Opel</option>
+                <option value="audi">Audi</option>
+            </select></div>
+    </div>
+
+    <div class="search-detail-list">
+        <div class="search-right">顾客姓名</div>
+        <div style="float: right; width: 60%;">
+            <input  class="search-input" placeholder="输入顾客姓名"></input>
+        </div>
+    </div>
+
+    <div class="search-detail-list">
+        <div class="search-right">性别</div>
+        <div style="float: right; ">
+            <select class="search-input">
+                <option value ="volvo">男</option>
+                <option value ="saab">女</option>
+
+            </select></div>
+        </div>
+    </div>
+
+    <div class="search-detail-list">
+        <div class="search-right">顾客姓名</div>
+        <div style="float: right; width: 60%; text-align: right;">
+            <input type="date"   class="search-input" />
+        </div>
+    </div>
+
+
+    <div class="search-detail-list">
+        <div class="search-right">职业</div>
+        <div style="float: right; width: 60%;">
+            <input  class="search-input" placeholder="输入顾客职业"></input>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;" class="search-detail-list">
+        <div class="search-right">手机号码</div>
+        <div style="float: right; width: 60%;">
+            <input class="search-input" placeholder="输入顾客手机号码"></input>
+        </div>
+    </div>
+
+    <div class="search-detail-list">
+        <div class="search-right">微信号</div>
+        <div style="float: right; width: 60%;">
+            <input class="search-input" placeholder="输入顾客微信号"></input>
+        </div>
+    </div>
+
+
+    <div style="margin-top: 20px;" class="search-detail-list">
+        <div class="search-right">意向需求</div>
+        <div style="float: right; width: 60%;">
+            <input class="search-input" placeholder="输入顾客意向需求"></input>
+        </div>
+    </div>
+
+    <div class="search-detail-list">
+        <div class="search-right">顾客照片</div>
+        <div onclick="navtodeail()" style="float: right; text-align: right; width: 60%;">
+            <img src="../images/date-icon.png">
+        </div>
+    </div>
+
+
+    <div class="search-detail-list">
+        <div class="search-right">心理价位</div>
+        <div style="float: right; width: 60%;">
+            <input type="number" class="search-input" placeholder="RMB"></input>
+        </div>
+    </div>
+
+    <div class="search-detail-list">
+        <div class="search-right">沟通记录备忘</div>
+        <div style="float: right; text-align: right; width: 60%;">
+            <img src="../images/date-icon.png">
+        </div>
+    </div>
+
+    <div class="search-detail-list" style="margin-top: 20px;">
+        <div class="search-right">备注</div>
+        <div style="float: right; width: 80%;">
+            <textarea rows="2" class="search-input"></textarea>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px; margin-top: 30px;  padding: 20px; text-align: center; position: relative;height: 90px; border-bottom: 1px solid #e8e8e8; ">
+        <input type="button" style="font-size: 32px;color:#fff; height: 80px;width: 400px; background-color: #9083ed; border-radius: 40px;" value="提交">
+    </div>
+
+</div>
+
+<script type="application/javascript">
+    function navtodeail() {
+        window.location.href = "./photolist?id=111"
+    }
+
+</script>
+</body>
+</html>

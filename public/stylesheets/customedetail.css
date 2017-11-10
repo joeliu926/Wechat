@@ -1,0 +1,19 @@
+body{margin: 0px;}
+.search-detail{width: 100%;font-size: 32px; background-color: #f7f7f7;}
+.search-detail-list{background-color:#fff;padding: 20px; position: relative;height: 90px; border-bottom: 1px solid #e8e8e8; }
+.search-input{height: 80px;width: 100%;font-size: 32px; text-align: right; border: 0px; color:#333333;}
+.search-right{float: left; line-height: 90px; color:#333333;}
+.photolist{width:100%}
+.photolist-title{height:30px;margin: 40px  20px 0px 40px; color:#333333; font-size: 35px;}
+.photo-body{width:100%;padding: 10px;}
+.img-block{
+    display: block;
+    margin: 5px;
+    float: left;
+    width:275px;
+    height: 260px;
+    padding: 20px;
+}
+.img-block-image{
+    height: 99%;width: 99%; border-radius: 30px;
+}

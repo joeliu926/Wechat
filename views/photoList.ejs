@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>客户资料</title>
+    <link rel='stylesheet' href='/stylesheets/customedetail.css' />
+</head>
+<body>
+<div class="photolist">
+    <div class="photolist-title">顾客照片</div>
+    <div class="photo-body">
+        <div class="img-block">
+            <img src="../images/date-icon.png" class="img-block-image"/>
+        </div>
+        <div class="img-block">
+            <img src="../images/date-icon.png" class="img-block-image"/>
+        </div>
+        <div class="img-block">
+            <img src="../images/date-icon.png" class="img-block-image"/>
+        </div>
+        <div class="img-block">
+            <img src="../images/date-icon.png" class="img-block-image"/>
+        </div>
+        <div class="img-block">
+            <img src="../images/date-icon.png" class="img-block-image"/>
+        </div>
+        <div class="img-block" >
+            <div style="border: 2px dashed #999999;text-align: center;line-height:240px;" class="img-block-image">
+                <div style="font-size: 80px;">+</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script type="application/javascript">
+    function navtodeail() {
+        window.location.href = "./phonelist?id=111"
+    }
+
+    function upload() {
+        var xhr = new XMLHttpRequest();
+        var progress = document.getElementById("progress")
+        progress.style.display = "block";
+
+        xhr.upload.addEventListener("progress", function(e) {
+            if (e.lengthComputable) {
+                var percentage = Math.round((e.loaded * 100) / e.total);
+                progress.value = percentage;
+            }
+        }, false);
+
+        xhr.upload.addEventListener("load", function(e){
+            console.log("上传完毕...")
+        }, false);
+
+        xhr.open("POST", "upload");
+        xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert(xhr.responseText); // handle response.
+                progress.style.display = "none";
+                progress.value = 0;
+            }
+        };
+        var file = document.getElementById("imgFile");
+        var fd = new FormData();
+        fd.append(file.files[0].name, file.files[0]);
+        xhr.send(fd);
+    }
+</script>
+</body>
+</html>

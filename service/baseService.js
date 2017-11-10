@@ -57,7 +57,6 @@ function gettoken(req, res, next){
     }
     var timeDiff= new Date().getTime()-(new Date(accesstoken.last_update_time).getTime());
     if(timeDiff>accesstoken.token_diff_time){
-        console.log("get token data++++++++++++++++");
         defualtCfg.method="GET";
         var opt=appUtil.extend({},defualtCfg);
         opt.url+=weChatAPI.accesstoken.url;
@@ -71,9 +70,7 @@ function gettoken(req, res, next){
                 var sPath='public/access_token.json';
                 accesstoken.last_update_time=new Date().getTime();
                 accesstoken.access_token=JSON.parse(body).access_token;
-                //console.log(accesstoken);
                 fileUtil.writeJSON(sPath,JSON.stringify(accesstoken));
-                // res.send(JSON.parse(body));
             }
         }
         httpClient(opt);
@@ -81,9 +78,6 @@ function gettoken(req, res, next){
         console.log("exist token data----------------");
     }
     return true;
-
-
-
 }
 module.exports = {
     gettoken: gettoken,
