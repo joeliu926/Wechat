@@ -2,19 +2,21 @@
 <html>
 <head>
     <title>客户资料</title>
-    <link rel='stylesheet' href='/stylesheets/customedetail.css' />
+    <link rel='stylesheet' href='../stylesheets/customedetail.css' />
+    <meta name="viewport" content="inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
 </head>
 <body>
 <div class="search-detail">
     <div class="search-detail-list">
         <div class="search-right">来源</div>
         <div style="float: right;">
-            <select class="search-input">
+            <select class="search-input" style="width:300px; text-align: right; ">
                 <option value ="volvo">Volvo</option>
                 <option value ="saab">Saab</option>
                 <option value="opel">Opel</option>
                 <option value="audi">Audi</option>
-            </select></div>
+            </select>
+        </div>
     </div>
 
     <div class="search-detail-list">
@@ -27,21 +29,19 @@
     <div class="search-detail-list">
         <div class="search-right">性别</div>
         <div style="float: right; ">
-            <select class="search-input">
+            <select class="search-input" style="width:300px; text-align: right; ">
                 <option value ="volvo">男</option>
                 <option value ="saab">女</option>
-
-            </select></div>
+            </select>
         </div>
     </div>
 
     <div class="search-detail-list">
-        <div class="search-right">顾客姓名</div>
+        <div class="search-right">生日</div>
         <div style="float: right; width: 60%; text-align: right;">
             <input type="date"   class="search-input" />
         </div>
     </div>
-
 
     <div class="search-detail-list">
         <div class="search-right">职业</div>
@@ -64,11 +64,15 @@
         </div>
     </div>
 
-
     <div style="margin-top: 20px;" class="search-detail-list">
         <div class="search-right">意向需求</div>
-        <div style="float: right; width: 60%;">
-            <input class="search-input" placeholder="输入顾客意向需求"></input>
+        <div style="float: right;">
+            <select class="search-input" style="width:300px; text-align: right; ">
+                <option value ="volvo">Volvo</option>
+                <option value ="saab">Saab</option>
+                <option value="opel">Opel</option>
+                <option value="audi">Audi</option>
+            </select>
         </div>
     </div>
 
@@ -101,8 +105,8 @@
         </div>
     </div>
 
-    <div style="margin-top: 20px; margin-top: 30px;  padding: 20px; text-align: center; position: relative;height: 90px; border-bottom: 1px solid #e8e8e8; ">
-        <input type="button" style="font-size: 32px;color:#fff; height: 80px;width: 400px; background-color: #9083ed; border-radius: 40px;" value="提交">
+    <div style=" margin-top: 30px;  padding: 20px; text-align: center; position: relative;height: 90px; border-bottom: 1px solid #e8e8e8; ">
+        <div type="button" style="line-height: 70px;display: inline-block;font-size: 32px;color:#fff; height: 80px;width: 400px; background-color: #9083ed; border-radius: 40px;" >提交</div>
     </div>
 
 </div>

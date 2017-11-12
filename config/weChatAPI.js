@@ -35,12 +35,12 @@ var config={
     },
     userinfo:{
         method:"get",
-        url:"https://api.weixin.qq.com/cgi-bin/user/info?access_token="+accessToken+"&openid=oh3NkxCV0gJ0-GtvC7LO5hKBsKio&lang=zh_CN"
+        url:"https://api.weixin.qq.com/cgi-bin/user/info?access_token="+accessToken+"&openid=_OPENID_&lang=zh_CN"
     },
     authorize:{
         authorizecode:{
-            method:"",
-            url:""
+            method:"GET",
+            url:"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weConfig.appid+"&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=_state_#wechat_redirect"
         },
         augetopenid:{
             method:"POST",

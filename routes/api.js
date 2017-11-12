@@ -4,10 +4,8 @@
 var express = require('express');
 var router = express.Router();
 var crypto = require('crypto');
-var userService=require('../service/userService');
+var baseService=require('../service/baseService');
 var testtoken=require('../service/menuService');
-var wconfig=require('../config/wechat_config');
-var fileUtil=require('../utils/fileUtils');
 
 /* GET home page. */
 router.get('/index', function(req, res, next) {
@@ -39,31 +37,15 @@ router.get('/serveral', function(req, res, next) {
     }
 });
 
-
 /* GET users listing. */
 router.get('/users', function(req, res, next) {
     var ucode= req.query.code;
-    userService.getoauthopenid(ucode);
+    baseService.getoauthopenid(ucode);
     res.send('respond with a resource  user data');
 });
 
 router.get('/setmenu', function(req, res, next) {
-     console.log('setmenu')
-    /*    var tokenUpdateTime=accesstoken.last_update_time;
-     if(!tokenUpdateTime||new Date(tokenUpdateTime)=="Invalid Date"){
-     res.send("set false");
-     }
-     var timeDiff= new Date().getTime()-(new Date(accesstoken.last_update_time).getTime());
-     console.log(timeDiff);
-     if(timeDiff>accesstoken.token_diff_time){
-     var sPath='public/access_token.json';
-     accesstoken.last_update_time=new Date().getTime();
-     console.log(accesstoken);
-     fileUtil.writeJSON(sPath,JSON.stringify(accesstoken));
-     }*/
     testtoken.setmenu(req,res,next);
-
-    //res.send('validation failed');
 });
 
 

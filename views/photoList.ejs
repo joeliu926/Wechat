@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>客户资料</title>
-    <link rel='stylesheet' href='/stylesheets/customedetail.css' />
+    <link rel='stylesheet' href='../stylesheets/customedetail.css' />
+    <meta name="viewport" content="inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
 </head>
 <body>
 <div class="photolist">
@@ -24,7 +25,11 @@
             <img src="../images/date-icon.png" class="img-block-image"/>
         </div>
         <div class="img-block" >
-            <div style="border: 2px dashed #999999;text-align: center;line-height:240px;" class="img-block-image">
+
+            <div onclick="uploadimge()" style="border: 2px dashed #999999;text-align: center;line-height:240px;" class="img-block-image">
+                <form style="display: none;" id="uploadForm" enctype="multipart/form-data" method="post" action="XXXXXX">
+                    <input type="file" name="imageFile" id="imageFile" accept="image/*;" capture="camera" onchange="fileSelected()" />
+                </form>
                 <div style="font-size: 80px;">+</div>
             </div>
         </div>
@@ -34,40 +39,42 @@
 </div>
 
 <script type="application/javascript">
-    function navtodeail() {
-        window.location.href = "./phonelist?id=111"
+    function uploadimge() {
+        document.getElementById("imageFile").click();
+        //showActionSheet()
     }
 
-    function upload() {
-        var xhr = new XMLHttpRequest();
-        var progress = document.getElementById("progress")
-        progress.style.display = "block";
 
-        xhr.upload.addEventListener("progress", function(e) {
-            if (e.lengthComputable) {
-                var percentage = Math.round((e.loaded * 100) / e.total);
-                progress.value = percentage;
-            }
-        }, false);
 
-        xhr.upload.addEventListener("load", function(e){
-            console.log("上传完毕...")
-        }, false);
 
-        xhr.open("POST", "upload");
-        xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                alert(xhr.responseText); // handle response.
-                progress.style.display = "none";
-                progress.value = 0;
-            }
-        };
-        var file = document.getElementById("imgFile");
-        var fd = new FormData();
-        fd.append(file.files[0].name, file.files[0]);
-        xhr.send(fd);
-    }
+     var iMaxFilesize = 2097152; //2M
+     window.fileSelected = function() {
+         var oFile = document.getElementById('imageFile').files[0];    //读取文件
+         var rFilter = /^(image\/bmp|image\/gif|image\/jpeg|image\/png|image\/tiff)$/i;
+         if (!rFilter.test(oFile.type)) {
+             alert("文件格式必须为图片");
+             return;
+         }
+         if (oFile.size > iMaxFilesize) {
+             alert("图片大小不能超过2M");
+             return;
+         }
+         var vFD = new FormData(document.getElementById('uploadForm')),    //建立请求和数据
+                 oXHR = new XMLHttpRequest();
+         oXHR.addEventListener('load', function(resUpload) {
+
+             console.log(resUpload.data)
+             //成功
+         }, false);
+         oXHR.addEventListener('error', function() {
+             //失败
+         }, false);
+         oXHR.addEventListener('abort', function() {
+             //上传中断
+         }, false);
+         oXHR.open('POST', "https://27478500.qcloud.la/uploadimg/attachment/upload");
+         oXHR.send(vFD);
+     };
 </script>
 </body>
 </html>

@@ -19,6 +19,11 @@ function registor(app) {
             root:"/api",
             require:"../routes/api.js"
         }
+        ,
+        {
+            root:"/msg",
+            require:"../routes/message.js"
+        }
     ];
 
     requires.forEach(function(item, index) {
