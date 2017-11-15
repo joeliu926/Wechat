@@ -9,35 +9,41 @@
 <div class="search-title">
     <div class="search-title-date" style="width: 45%;text-align: center;">
       <!--  <img src="../images/date-icon.png" class="search-title-img">-->
-        <input type="date" class="search-title-date-input"/>
+        <input type="date" id="startDate" class="search-title-date-input" value="<%=startDate%>" onchange="changedata(this)"/>
     </div>
     <div class="search-title-mid">至</div>
     <div class="search-title-date" style="width: 42%; text-align: center;">
        <!-- <img src="../images/date-icon.png" class="search-title-img">-->
-        <input type="date" class="search-title-date-input"/>
+        <input type="date" id="endDate" class="search-title-date-input" value="<%=endDate%>" onchange="changedata(this)"/>
     </div>
 </div>
-<div class="search-body" style="margin: 10px;">
+<div class="search-body" style="margin: 10px;overflow: auto;position: absolute;top:121px; bottom: 0px;left: 0px; right: 0px;">
+    <%if(datalist.length>0&&datalist!='null'){datalist.forEach(function(data){ %>
     <div class="search-body-root">
         <div class="search-body-div">
-            <img style="width:100px;height:100px;" src="http://img01.zhaopin.cn/2014/rd2/img/rd_logo1.png"/>
+            <img style="width:100px;height:100px;" src="<%=data.logo%>"/>
         </div>
-         <div style="display: inline-block;width: 85%;" dataid='<%=title%>' onclick="navtodeail(this)">
+         <div style="display: inline-block;width: 85%;" dataid='<%=data.id%>' onclick="navtodeail(this)">
              <div class="search-body-font">
-                     金喜善
+                 <%=data.name%>
              </div>
-             <div class="search-body-right">
-                 <span style="line-height:100px;" >不完整  ></span>
+             <div class="search-body-right" style="<%=data.DataStatus?'':'color:#333;'%>">
+                 <span style="line-height:100px;" > <%=data.DataStatus?"不完整  >":">"%></span>
              </div>
          </div>
     </div>
+    <% }) }%>
 </div>
 <script type="application/javascript">
-    function navtodeail(title) {
-        console.log(title)
-        window.location.href = "./detail?id="+title.getAttribute('dataid');
+    function navtodeail(thisobj) {
+        window.location.href = "./detail?id="+thisobj.getAttribute('dataid');
     }
 
+    function changedata(thisobj) {
+        var startDate = document.getElementById('startDate').value;
+        var endDate = document.getElementById('endDate').value;
+        window.location.href = "./list?Date="+startDate+"_"+endDate;
+    }
 </script>
 </body>
 </html>

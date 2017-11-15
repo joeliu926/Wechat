@@ -6,14 +6,7 @@ var router = express.Router();
 var messageServer=require('../service/messageServer');
 
 router.post('/sendmessage', function(req, res, next) {
-    messageServer.sendKFMessage({
-        "touser":"oh3NkxMjCx123_zJv-UhbbAItkeY",
-        "msgtype":"text",
-        "text":
-        {
-            "content":"Hello World"
-        }
-    });
+    messageServer.sendKFMessage(req.body);
 });
 
 module.exports = router;

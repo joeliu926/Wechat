@@ -15,6 +15,10 @@ function registor(app) {
             root:"/customer",
             require: '../routes/customerDetail.js'
         },
+        {
+            root:"/customer",
+            require: '../routes/photoList.js'
+        },
         { 
             root:"/api",
             require:"../routes/api.js"

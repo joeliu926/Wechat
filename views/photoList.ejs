@@ -4,77 +4,173 @@
     <title>客户资料</title>
     <link rel='stylesheet' href='../stylesheets/customedetail.css' />
     <meta name="viewport" content="inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <meta charset="utf-8">
 </head>
 <body>
 <div class="photolist">
     <div class="photolist-title">顾客照片</div>
     <div class="photo-body">
-        <div class="img-block">
-            <img src="../images/date-icon.png" class="img-block-image"/>
-        </div>
-        <div class="img-block">
-            <img src="../images/date-icon.png" class="img-block-image"/>
-        </div>
-        <div class="img-block">
-            <img src="../images/date-icon.png" class="img-block-image"/>
-        </div>
-        <div class="img-block">
-            <img src="../images/date-icon.png" class="img-block-image"/>
-        </div>
-        <div class="img-block">
-            <img src="../images/date-icon.png" class="img-block-image"/>
-        </div>
+        <%if(data.length>0){ data.forEach(function(item){ %>
+            <div class="img-block">
+                <img src="<%=item%>" class="img-block-image"/>
+            </div>
+        <% }) }%>
         <div class="img-block" >
-
             <div onclick="uploadimge()" style="border: 2px dashed #999999;text-align: center;line-height:240px;" class="img-block-image">
-                <form style="display: none;" id="uploadForm" enctype="multipart/form-data" method="post" action="XXXXXX">
-                    <input type="file" name="imageFile" id="imageFile" accept="image/*;" capture="camera" onchange="fileSelected()" />
+                <form style="display: none;" id="uploadForm" enctype="multipart/form-data" method="post" action="https://27478500.qcloud.la/uploadimg/api/customer/uploadPicture/">
+                    <input type="file" accept="image/*" name="take-picture" id="take-picture"/>
                 </form>
                 <div style="font-size: 80px;">+</div>
             </div>
         </div>
-
     </div>
-
 </div>
 
 <script type="application/javascript">
     function uploadimge() {
-        document.getElementById("imageFile").click();
-        //showActionSheet()
+        document.getElementById("take-picture").click();
     }
 
+    var eleFile = document.querySelector('#take-picture');
+    // 压缩图片需要的一些元素和对象
+    var reader = new FileReader(), img = new Image();
+    // 选择的文件对象
+    var file = null;
+    // 缩放图片需要的canvas
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
 
+    // base64地址图片加载完毕后
+    img.onload = function () {
+        // 图片原始尺寸
+        var originWidth = this.width;
+        var originHeight = this.height;
 
+        // 最大尺寸限制
+        var maxWidth = 400, maxHeight = 400;
+        // 目标尺寸
+        var targetWidth = originWidth, targetHeight = originHeight;
+        // 图片尺寸超过400x400的限制
+        if (originWidth > maxWidth || originHeight > maxHeight) {
+            if (originWidth / originHeight > maxWidth / maxHeight) {
+                // 更宽，按照宽度限定尺寸
+                targetWidth = maxWidth;
+                targetHeight = Math.round(maxWidth * (originHeight / originWidth));
+            } else {
+                targetHeight = maxHeight;
+                targetWidth = Math.round(maxHeight * (originWidth / originHeight));
+            }
+        }
 
-     var iMaxFilesize = 2097152; //2M
-     window.fileSelected = function() {
-         var oFile = document.getElementById('imageFile').files[0];    //读取文件
-         var rFilter = /^(image\/bmp|image\/gif|image\/jpeg|image\/png|image\/tiff)$/i;
-         if (!rFilter.test(oFile.type)) {
-             alert("文件格式必须为图片");
-             return;
-         }
-         if (oFile.size > iMaxFilesize) {
-             alert("图片大小不能超过2M");
-             return;
-         }
-         var vFD = new FormData(document.getElementById('uploadForm')),    //建立请求和数据
-                 oXHR = new XMLHttpRequest();
-         oXHR.addEventListener('load', function(resUpload) {
+        // canvas对图片进行缩放
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+        // 清除画布
+        context.clearRect(0, 0, targetWidth, targetHeight);
+        // 图片压缩
+        context.drawImage(img, 0, 0, targetWidth, targetHeight);
 
-             console.log(resUpload.data)
-             //成功
-         }, false);
-         oXHR.addEventListener('error', function() {
-             //失败
-         }, false);
-         oXHR.addEventListener('abort', function() {
-             //上传中断
-         }, false);
-         oXHR.open('POST', "https://27478500.qcloud.la/uploadimg/attachment/upload");
-         oXHR.send(vFD);
-     };
+        // canvas转为blob并上传
+        canvas.toBlob(function (blob) {
+            var vFD = new FormData(document.getElementById('uploadForm'))
+            vFD.append("data", blob);
+            let ids = '<%=id%>';
+            let type = '<%=type%>';
+            // 图片ajax上传
+            var xhr = new XMLHttpRequest();
+            // 文件上传成功
+            xhr.onreadystatechange = function() {
+                if (xhr.status == 200) {
+                    //alert('上传成功')
+                    //location.reload();
+                }
+            };
+            xhr.addEventListener('load', function(resUpload) {
+                location.reload();
+                //成功
+            }, false);
+            // 开始上传
+            xhr.open("POST", 'https://27478500.qcloud.la/uploadimg/api/customer/uploadPicture/'+ids+'/'+type);
+            xhr.send(vFD);
+        }, file.type || 'image/png',0.5);
+    };
+
+    // 文件base64化，以便获知图片原始尺寸
+    reader.onload = function(e) {
+        img.src = e.target.result;
+    };
+    eleFile.addEventListener('change', function (event) {
+        file = event.target.files[0];
+        // 选择的文件是图片
+        if (file.type.indexOf("image") == 0) {
+            reader.readAsDataURL(file);
+        }
+    });
+
+/*
+    var takePicture = document.querySelector("#take-picture");
+        takePicture.onchange = function (event) {
+            // Get a reference to the taken picture or chosen file
+            var files = event.target.files,file;
+            let ids = '<%=id%>';
+            let type = '<%=type%>';
+            if (files && files.length > 0) {
+                file = files[0];
+                try {
+                   /!* // Get window.URL object
+                    var URL = window.URL || window.webkitURL;
+
+                    // Create ObjectURL
+                    var imgURL = URL.createObjectURL(file);
+
+                    // Set img src to ObjectURL
+                    showPicture.src = imgURL;
+
+                    // Revoke ObjectURL after imagehas loaded
+                    showPicture.onload = function() {
+                        URL.revokeObjectURL(imgURL);
+                    };*!/
+
+                    var vFD = new FormData(document.getElementById('uploadForm')),    //建立请求和数据
+                            oXHR = new XMLHttpRequest();
+                    //oXHR.processData= false;  // 告诉jQuery不要去处理发送的数据
+                    //oXHR.contentType=false;   // 告诉jQuery不要去设置Content-Type请求头
+                    oXHR.addEventListener('load', function(resUpload) {
+                        alert(JSON.stringify(resUpload).toString());
+                            location.reload();
+                        //成功
+                    }, false);
+                    oXHR.addEventListener('error', function() {
+                        alert('5555');
+                        //失败
+                    }, false);
+                    oXHR.addEventListener('abort', function() {
+                        alert('6666');
+                        //上传中断
+                    }, false);
+                    oXHR.open('POST', "https://27478500.qcloud.la/uploadimg/api/customer/uploadPicture/"+ids+"/"+type+"");
+                    oXHR.send(vFD);
+                }
+                catch (e) {
+                   /!* try {
+                        // Fallback if createObjectURL is not supported
+                        var fileReader = new FileReader();
+                        fileReader.onload = function (event) {
+                            showPicture.src = event.target.result;
+                        };
+                        fileReader.readAsDataURL(file);
+                    }
+                    catch (e) {
+                        // Display error message
+                        var error = document.querySelector("#error");
+                        if (error) {
+                            error.innerHTML = "Neither createObjectURL or FileReader are supported";
+                        }
+                    }*!/
+                }
+            }
+        };*/
+
 </script>
 </body>
 </html>

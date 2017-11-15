@@ -10,11 +10,10 @@
     <div class="search-detail-list">
         <div class="search-right">来源</div>
         <div style="float: right;">
-            <select class="search-input" style="width:300px; text-align: right; ">
-                <option value ="volvo">Volvo</option>
-                <option value ="saab">Saab</option>
-                <option value="opel">Opel</option>
-                <option value="audi">Audi</option>
+            <select id="origin" class="search-input" style="width:300px; text-align: right; ">
+                <%initData.origin.forEach(function(data){ %>
+                <option <%=detailInfo.source==data.code?"selected":""%> value ="<%=data.code%>"><%=data.name%></option>
+                <% }) %>
             </select>
         </div>
     </div>
@@ -22,16 +21,17 @@
     <div class="search-detail-list">
         <div class="search-right">顾客姓名</div>
         <div style="float: right; width: 60%;">
-            <input  class="search-input" placeholder="输入顾客姓名"></input>
+            <input id="customerName" class="search-input" value="<%=detailInfo.name%>" placeholder="输入顾客姓名"></input>
         </div>
     </div>
 
     <div class="search-detail-list">
         <div class="search-right">性别</div>
         <div style="float: right; ">
-            <select class="search-input" style="width:300px; text-align: right; ">
-                <option value ="volvo">男</option>
-                <option value ="saab">女</option>
+            <select id="customerSex" class="search-input" style="width:300px; text-align: right; ">
+                <option <%=detailInfo.gender==0?"selected":""%> value ="0">未知</option>
+                <option <%=detailInfo.gender==1?"selected":""%> value ="1">男</option>
+                <option <%=detailInfo.gender==2?"selected":""%> value ="2">女</option>
             </select>
         </div>
     </div>
@@ -39,47 +39,49 @@
     <div class="search-detail-list">
         <div class="search-right">生日</div>
         <div style="float: right; width: 60%; text-align: right;">
-            <input type="date"   class="search-input" />
+            <input  id="birthday" type="date" value="<%=detailInfo.birthday%>"   style="width:300px; text-align: right; " class="search-input" />
         </div>
     </div>
 
     <div class="search-detail-list">
         <div class="search-right">职业</div>
         <div style="float: right; width: 60%;">
-            <input  class="search-input" placeholder="输入顾客职业"></input>
+            <input  id="job"  class="search-input"  value="<%=detailInfo.job%>"  placeholder="输入顾客职业"></input>
         </div>
     </div>
 
     <div style="margin-top: 20px;" class="search-detail-list">
         <div class="search-right">手机号码</div>
         <div style="float: right; width: 60%;">
-            <input class="search-input" placeholder="输入顾客手机号码"></input>
+            <input id="phoneNumber" class="search-input"  value="<%=detailInfo.phoneNum%>"  placeholder="输入顾客手机号码"></input>
         </div>
     </div>
 
     <div class="search-detail-list">
         <div class="search-right">微信号</div>
         <div style="float: right; width: 60%;">
-            <input class="search-input" placeholder="输入顾客微信号"></input>
+            <input id="wechat" class="search-input" value="<%=detailInfo.wechatNum%>"   placeholder="输入顾客微信号"></input>
         </div>
     </div>
 
     <div style="margin-top: 20px;" class="search-detail-list">
         <div class="search-right">意向需求</div>
         <div style="float: right;">
-            <select class="search-input" style="width:300px; text-align: right; ">
-                <option value ="volvo">Volvo</option>
-                <option value ="saab">Saab</option>
-                <option value="opel">Opel</option>
-                <option value="audi">Audi</option>
+            <select class="search-input" id="product" style="width:300px; text-align: right; ">
+                <%if(initData.proList.length>0){initData.proList.forEach(function(data){ if(detailInfo.productList.length>0){ %>
+                    <option <%=detailInfo.productList[0].productCode==data.productCode?"selected":""%> value ="<%=data.productCode%>"><%=data.productName%></option>
+                <% }})} %>
             </select>
         </div>
     </div>
 
-    <div class="search-detail-list">
+    <div onclick="navtodeail(0)" class="search-detail-list">
         <div class="search-right">顾客照片</div>
-        <div onclick="navtodeail()" style="float: right; text-align: right; width: 60%;">
-            <img src="../images/date-icon.png">
+        <div  style="float: right; text-align: right; width: 60%;">
+            <%if(initData.customPhoto.length>0){initData.customPhoto.reverse().forEach(function(data,i){ if(i<3){%>
+            <%=data.value%>
+                <img style="width: 100px;height: 100px;" src="<%=data%>"/>
+            <% } })} %>
         </div>
     </div>
 
@@ -87,33 +89,93 @@
     <div class="search-detail-list">
         <div class="search-right">心理价位</div>
         <div style="float: right; width: 60%;">
-            <input type="number" class="search-input" placeholder="RMB"></input>
+            <input id="expectPrice"  value="<%=detailInfo.expectPrice%>"   type="number" class="search-input" placeholder="RMB"></input>
         </div>
     </div>
 
-    <div class="search-detail-list">
+    <div  onclick="navtodeail(1)" class="search-detail-list">
         <div class="search-right">沟通记录备忘</div>
-        <div style="float: right; text-align: right; width: 60%;">
-            <img src="../images/date-icon.png">
+        <div  style="float: right; text-align: right; width: 60%;">
+            <%initData.chatPhoto.reverse().forEach(function(data,i){ if(i<3){%>
+            <%=data.value%>
+            <img style="width: 100px;height: 100px;" src="<%=data%>"/>
+            <% } }) %>
         </div>
     </div>
 
     <div class="search-detail-list" style="margin-top: 20px;">
         <div class="search-right">备注</div>
         <div style="float: right; width: 80%;">
-            <textarea rows="2" class="search-input"></textarea>
+            <input id="comment" value="<%=detailInfo.comment%>"   rows="2" class="search-input"></input>
         </div>
     </div>
 
     <div style=" margin-top: 30px;  padding: 20px; text-align: center; position: relative;height: 90px; border-bottom: 1px solid #e8e8e8; ">
-        <div type="button" style="line-height: 70px;display: inline-block;font-size: 32px;color:#fff; height: 80px;width: 400px; background-color: #9083ed; border-radius: 40px;" >提交</div>
+        <div type="button" onclick="updateInfo()" style="line-height: 70px;display: inline-block;font-size: 32px;color:#fff; height: 80px;width: 400px; background-color: #9083ed; border-radius: 40px;" >提交</div>
     </div>
-
 </div>
 
 <script type="application/javascript">
-    function navtodeail() {
-        window.location.href = "./photolist?id=111"
+    function navtodeail(thisObj) {
+        window.location.href = "./photolist?id=<%=detailInfo.id%>"+"_"+thisObj;
+    }
+
+    function updateInfo() {
+        let cid = '<%=detailInfo.id%>';
+        let origin =document.getElementById('origin').value;
+        let customerName =document.getElementById('customerName').value;
+        let customerSex =document.getElementById('customerSex').value;
+        let birthday =document.getElementById('birthday').value;
+        let job =document.getElementById('job').value;
+        let phoneNumber =document.getElementById('phoneNumber').value;
+        let wechat =document.getElementById('wechat').value;
+        let product =document.getElementById('product').value;
+        let expectPrice =document.getElementById('expectPrice').value;
+        let comment =document.getElementById('comment').value;
+
+        let postobj= {
+                "id": cid,
+                "job": job,
+                "customerDemand": product,
+                "name": customerName,
+                "phoneNum": phoneNumber,
+                "comment": comment,
+                "expectPrice": expectPrice,
+                "gender": customerSex,
+                "source":origin,
+                "wechatNum": wechat,
+                "birthday":birthday
+        }
+
+        var xhr = getXHR();
+        //第一，method：请求的类型；GET 或 POST
+        //第二，url：文件在服务器上的位置
+        //第三：async：true（异步）或 false（同步）
+        xhr.open("post","./addDetail",true);
+        xhr.setRequestHeader("Content-type","application/json");
+        //2.将请求发送到服务器。
+        xhr.send(JSON.stringify(postobj));
+        //3.在接收响应前，设置等待服务器响应
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 && xhr.status == 200){
+                //保证请求已经完成，且响应已经就绪
+                //4.接受响应
+                var data = xhr.responseText ;
+                window.location.href = "./list?Date=";
+            }
+        };
+    }
+
+    function getXHR(){
+        var xmlhttp;
+        if(window.XMLHttpRequest){
+            //如果使用的浏览器是 IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        }else{
+            //如果使用的浏览器是 IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        return xmlhttp;
     }
 
 </script>
