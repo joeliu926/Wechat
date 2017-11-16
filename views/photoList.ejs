@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>客户资料</title>
+    <title>客户中心</title>
     <link rel='stylesheet' href='../stylesheets/customedetail.css' />
     <meta name="viewport" content="inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
     <meta charset="utf-8">
 </head>
 <body>
 <div class="photolist">
-    <div class="photolist-title">顾客照片</div>
+    <div class="photolist-title"><%=type==0?'顾客照片':'沟通记录备忘'%> </div>
     <div class="photo-body">
         <%if(data.length>0){ data.forEach(function(item){ %>
             <div class="img-block">
@@ -18,8 +18,9 @@
         <div class="img-block" >
             <div onclick="uploadimge()" style="border: 2px dashed #999999;text-align: center;line-height:240px;" class="img-block-image">
                 <form style="display: none;" id="uploadForm" enctype="multipart/form-data" method="post" action="https://27478500.qcloud.la/uploadimg/api/customer/uploadPicture/">
-                    <input type="file" accept="image/*" name="take-picture" id="take-picture"/>
+
                 </form>
+                <input style="display: none;" type="file" accept="image/*" name="take-picture" id="take-picture"/>
                 <div style="font-size: 80px;">+</div>
             </div>
         </div>
@@ -61,7 +62,6 @@
                 targetWidth = Math.round(maxHeight * (originWidth / originHeight));
             }
         }
-
         // canvas对图片进行缩放
         canvas.width = targetWidth;
         canvas.height = targetHeight;

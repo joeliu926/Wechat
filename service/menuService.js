@@ -48,16 +48,10 @@ function setmenu(req, res, next){
     httpClient(opt);
 }
 function setcharactermenu(req, res, next){
-    console.log("set individual menu info --------");
-    //console.log(menuconfig);
     defualtCfg.method="POST";
     var opt=appUtil.extend({},defualtCfg);
     opt.data=menuconfig;
     opt.url+=weChatAPI.menu.setconditional.url;
-    console.log("------------------------");
-    console.log(opt);
-    console.log("------------------------");
-    console.log(opt.url);
     opt.callBack=function(error, response, body){
         if(error)
         {

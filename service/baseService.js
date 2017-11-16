@@ -5,6 +5,7 @@ var weChatAPI=require('../config/weChatAPI');
 var menuconfig=require('../public/menu');
 var accesstoken=require('../public/access_token.json');
 var fileUtil=require('../utils/fileUtils');
+var sessionAgent = require('../utils/sessionAgent');
 
 var defualtCfg={
     //url:CONSTANT.remoteHost+":"+CONSTANT.remotePort+'/api/consultRecord/',
@@ -101,13 +102,19 @@ function gettoken(req, res, next){
 }
 
 function checkCode(req,res) {
-    if(!req.query.state){
-        let requrl =req.headers["x-client-proto"]+"://"+req.headers.host+"/wx"+req.originalUrl;
-        console.log("-----requrl",requrl);
-        res.redirect(weChatAPI.authorize.authorizecode.url.replace("REDIRECT_URI",requrl));
-        return false;
+    let _userinfo = sessionAgent.getUserInfo(req);
+    if(_userinfo){
+        return true;
     }
-    else{return true;}
+    else{
+        if(!req.query.state){
+            let requrl =req.headers["x-client-proto"]+"://"+req.headers.host+"/wx"+req.originalUrl;
+            res.redirect(weChatAPI.authorize.authorizecode.url.replace("REDIRECT_URI",requrl));
+            return false;
+        }
+        else{return true;}
+    }
+
 }
 
 function setcharactermenu(req, res, next,code){
@@ -131,21 +138,31 @@ function setcharactermenu(req, res, next,code){
 }
 
 function afterAuthorized(req, res, next,cb) {
-    var _promise =  new Promise(function(resolve){resolve();});
-    _promise.then(function () {
-            return new Promise (function(resolve, reject) {
-                getoauthopenid(req.query.code,resolve,reject);
+    let _userinfo = sessionAgent.getUserInfo(req);
+
+    if(_userinfo){
+        cb&&cb(_userinfo);
+    }
+    else{
+        var _promise =  new Promise(function(resolve){resolve();});
+        _promise.then(function () {
+                return new Promise (function(resolve, reject) {
+                    getoauthopenid(req.query.code,resolve,reject);
+                });
+            })
+            .then(function (openObj) {
+                return new Promise (function(resolve, reject) {
+                    getuserinfo(openObj.openid,resolve,reject);
+                });
+            })
+            .then(function (userInfo) {
+
+                sessionAgent.setUserInfo(req,userInfo);
+
+                cb&&cb(userInfo);
+
             });
-        })
-        .then(function (openObj) {
-            return new Promise (function(resolve, reject) {
-                getuserinfo(openObj.openid,resolve,reject);
-            });
-        })
-        .then(function (userInfo) {
-            cb&&cb(userInfo);
-          
-        });
+    }
 }
 
 module.exports = {

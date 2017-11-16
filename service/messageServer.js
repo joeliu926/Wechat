@@ -8,7 +8,7 @@ var defualtCfg={
     contentType:'application/json'
 };
 
-function sendKFMessage(data){
+function sendKFMessage(data,cb){
     defualtCfg.method=weChatAPI.message.sendkfmsg.method;
     var opt=appUtil.extend({},defualtCfg);
     opt.url+=weChatAPI.message.sendkfmsg.url;
@@ -19,7 +19,7 @@ function sendKFMessage(data){
             console.log(error);
         }
         else {
-            console.log(JSON.parse(body));
+            cb&&cb(body);
         }
     }
     httpClient(opt);

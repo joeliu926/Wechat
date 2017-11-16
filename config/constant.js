@@ -29,7 +29,8 @@ module.exports = {
         loginCount: '__LOGIN_COUNT__',
         accessInfo: '__AUTH_INFO__',
         xAuthToken: '__X_AUTH_TOKEN__',
-        resourceCode: '__RESOURCE_CODE__'
+        resourceCode: '__RESOURCE_CODE__',
+        OpenId:'__OPENID__'
     },
     //白名单
     sessionWhiteList: [

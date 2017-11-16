@@ -18,10 +18,8 @@ router.get('/detail', function(req, res, next) {
         return false;
     }
 
+    console.log('77777')
     baseServer.afterAuthorized(req, res, next,function (userInfo) {
-
-
-
         let initData={
             proList:'',
             origin:'',
@@ -33,7 +31,7 @@ router.get('/detail', function(req, res, next) {
         var pmsProList = new Promise(function (resolve) {
             defualtCfg.method="GET";
             var opt=appUtil.extend({},defualtCfg)
-            opt.url+=`/product/list/${userInfo.unionid}`;
+            opt.url+=`/product/list?unionid=${userInfo.unionid}`;
             opt.callBack=function(error, response, body){
                 if(error)
                 {
@@ -42,7 +40,16 @@ router.get('/detail', function(req, res, next) {
                 else {
                     body = JSON.parse(body);
                     if(body.data){
-                        initData.proList =body.data;
+                        let prouList  = [];
+                        body.data.forEach(item=>{
+                            item.productList.forEach(item2=>{
+                                item2.productList.forEach(item3=>{
+                                    prouList.push(item3);
+                                });
+                            })
+                        })
+
+                        initData.proList =prouList;
                     }
                     resolve();
                 }
@@ -62,8 +69,14 @@ router.get('/detail', function(req, res, next) {
                 else {
                     body = JSON.parse(body);
                     if(body.data)
-                    {
-                        initData.origin = body.data;
+                    {//把三及并作一级处理
+                        let originList  = [];
+                        body.data.forEach(item=>{
+                            item.sourceList.forEach(item2=>{
+                                originList.push(item2);
+                            })
+                        })
+                        initData.origin = originList;
                     }
                     resolve();
                 }
@@ -111,8 +124,6 @@ router.get('/detail', function(req, res, next) {
             }
             httpClient(opt);
         });
-
-
         Promise.all([pmsProList,pmsOrigin,pmsCustomPhoto,pmsChatPhoto]).then(function (values) {
             defualtCfg.method="GET";
             var opt=appUtil.extend({},defualtCfg);
@@ -126,14 +137,13 @@ router.get('/detail', function(req, res, next) {
                     body = JSON.parse(body);
                     if(body.data)
                     {
-                        console.log('initData',initData);
+                        //console.log('initData',initData);
                         res.render('customerDetail', { initData:initData,detailInfo:body.data,userInfo:'',});
                     }
                 }
             }
             httpClient(opt);
         });
-
     })
 
 });

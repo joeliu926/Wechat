@@ -9,7 +9,7 @@ var httpClient=require('../utils/httpClient');
 var appUtil=require('../utils/appUtils');
 
 var defualtCfg={
-    url:CONSTANT.remoteHost+":"+CONSTANT.remotePort+'/api/customer',
+    url:CONSTANT.remoteHost+":"+CONSTANT.remotePort+'/api',
     contentType:'application/json'
 };
 
@@ -26,17 +26,39 @@ router.get('/list', function(req, res, next) {
 
         defualtCfg.method="GET";
         var opt=appUtil.extend({},defualtCfg);
-        opt.url+=`/customerList?userUnionid=${userInfo.unionid}&startDate=${_startD}&endDate=${_endD}`;
+        opt.url+=`/users/wx/${userInfo.unionid}`;
         opt.callBack=function(error, response, body){
             if(error)
             {
-                console.log(error);
+                res.render('customerList', { datalist:[] ,userInfo:'',startDate:_startD_str,endDate:_endD_str,hasBind:false});
             }
             else {
-                res.render('customerList', { datalist:JSON.parse(body).data ,userInfo:'',startDate:_startD_str,endDate:_endD_str});
+                body=JSON.parse(body);
+               if(body.code==3004){
+                   res.render('customerList', { datalist:[] ,userInfo:'',startDate:_startD_str,endDate:_endD_str,hasBind:false});
+               }
+                else{
+                   defualtCfg.method="GET";
+                   opt=appUtil.extend({},defualtCfg);
+                   opt.url=CONSTANT.remoteHost+":"+CONSTANT.remotePort+'/api'+`/customer/customerList?userUnionid=${userInfo.unionid}&startDate=${_startD}&endDate=${_endD}`;
+                   opt.callBack=function(error, response, body){
+                       if(error)
+                       {
+                           console.log(error);
+                       }
+                       else {
+                           res.render('customerList', { datalist:JSON.parse(body).data ,userInfo:'',startDate:_startD_str,endDate:_endD_str,hasBind:true});
+                       }
+                   }
+                   httpClient(opt);
+               }
             }
         }
         httpClient(opt);
+
+
+
+
     })
 });
 

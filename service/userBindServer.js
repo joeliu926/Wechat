@@ -8,17 +8,23 @@ var defualtCfg={
     contentType:'application/json'
 };
 
-function bindUser(unionid,usercode,cb){
+
+function bindUser(args,usercode,cb){
     defualtCfg.method="POST";
     var opt=appUtil.extend({},defualtCfg);
     opt.url+='/users/bind';
     opt.data= {
-        unionId:unionid,
+        wxOpenId:args.openid,
+        nickname:args.nickname,
+        gender:args.sex,
+        province:args.province,
+        city:args.city,
+        country:args.country,
+        headImgUrl:args.headimgurl,
+        unionId:args.unionid,
         userCode:usercode
     };
 
-    console.log('opt',opt);
-    
     opt.callBack=function(error, response, body){
         if(error)
         {

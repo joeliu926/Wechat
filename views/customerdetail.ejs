@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>客户资料</title>
+    <title>客户中心</title>
     <link rel='stylesheet' href='../stylesheets/customedetail.css' />
     <meta name="viewport" content="inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
 </head>
@@ -68,8 +68,8 @@
         <div class="search-right">意向需求</div>
         <div style="float: right;">
             <select class="search-input" id="product" style="width:300px; text-align: right; ">
-                <%if(initData.proList.length>0){initData.proList.forEach(function(data){ if(detailInfo.productList.length>0){ %>
-                    <option <%=detailInfo.productList[0].productCode==data.productCode?"selected":""%> value ="<%=data.productCode%>"><%=data.productName%></option>
+                <%if(initData.proList.length>0){initData.proList.forEach(function(data){ if(initData.proList.length>0){ %>
+                    <option <%=detailInfo.customerDemand==data.productCode?"selected":""%> value ="<%=data.productCode%>"><%=data.productName%></option>
                 <% }})} %>
             </select>
         </div>

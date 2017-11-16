@@ -6,6 +6,36 @@
     <meta name="viewport" content="inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
 </head>
 <body>
+
+<%if(hasBind==false){%>
+<div class="no-bind" style="margin-top: 200px;">
+    <div>
+        每天都要用的
+    </div>
+    <div>
+        就选最方便的
+    </div>
+    <div>
+        节省下来的时间发发呆也好
+    </div>
+    <div>
+        拥有“助手”
+    </div>
+    <div>
+        拨打电话
+    </div>
+    <div>
+        拥有“助手”
+    </div>
+    <div style="font-size: 50px;color:rebeccapurple;">
+        40080011111
+    </div>
+    <div  style="font-size: 50px;color:orchid;">
+        Say：“哈罗”
+    </div>
+</div>
+<%}else{%>
+
 <div class="search-title">
     <div class="search-title-date" style="width: 45%;text-align: center;">
       <!--  <img src="../images/date-icon.png" class="search-title-img">-->
@@ -32,8 +62,15 @@
              </div>
          </div>
     </div>
-    <% }) }%>
+    <% }) }else{%>
+
+    <div class="search-body-root" style="font-size: 45px;padding-top:50px;line-height: 300px; text-align:center;">
+        您还没有客户哦，加油！
+    </div>
+    <%}%>
 </div>
+
+<%}%>
 <script type="application/javascript">
     function navtodeail(thisobj) {
         window.location.href = "./detail?id="+thisobj.getAttribute('dataid');

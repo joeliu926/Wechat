@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var baseSevice=require('./service/baseService');
@@ -20,6 +21,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  secret:'rkylin_wechat',
+  name:'rkylin_wechat_sessionid',
+  cookie:{maxAge:12 * 60 * 60 * 1000},
+  resave:true,
+  saveUninitialized:false
+}));
 
 app.use(function(req, res, next) {
 

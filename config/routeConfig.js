@@ -2,7 +2,6 @@
  * Created by JoeLiu on 2017-10-23.
  */
 
-
 function registor(app) {
 
     //app.use(require('../security/authentication.js'));
@@ -22,8 +21,7 @@ function registor(app) {
         { 
             root:"/api",
             require:"../routes/api.js"
-        }
-        ,
+        },
         {
             root:"/msg",
             require:"../routes/message.js"

@@ -26,8 +26,10 @@ function initwechat(app) {
                     "title":"哈罗小助手",
                     "appid":"wx0d601009b9b6ac71",
                     "pagepath":"/page/index",
-                    "thumb_media_id":"z_TmrN3pMSqL_k_U3L_t_jkWHlJdUSFWVNACirqs5_qTKmTVKW95JiL9FGiM43oj"
+                    "thumb_media_id":"YZ8K_s8kxr51ol-iIJch1Edny09HJ4Ie_mgaYc3HDlbFWHtr9rqtJUPMYTOs7vBM"
                 }
+            },function (params) {
+                console.log('params',params);
             });
             res.reply({type: "text", content: '欢迎使用案例助手!'});
             return;
@@ -37,16 +39,16 @@ function initwechat(app) {
         {
             if(message.Content.length==6){
                 baseServer.getuserinfo(message.FromUserName,function (ars) {
-                    userBindServer.bindUser(ars.unionid,message.Content,function (resobj) {
+                    userBindServer.bindUser(ars,message.Content,function (resobj) {
                         //console.log('resobj.code',resobj);
                         resobj= JSON.parse(resobj);
                         if(resobj.code==0){
                             res.reply({type: "text", content: '恭喜您！绑定成功!'});
                         }
-                        else if(resobj.code==2001){
+                        else if(resobj.code==3007){
                             res.reply({type: "text", content: '验证码无效!'});
                         }
-                        else if(resobj.code==2001){
+                        else if(resobj.code==3008){
                             res.reply({type: "text", content: '您已经绑定，无需再操作!'});
                         }
                         else{

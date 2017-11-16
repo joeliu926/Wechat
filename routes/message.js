@@ -6,7 +6,10 @@ var router = express.Router();
 var messageServer=require('../service/messageServer');
 
 router.post('/sendmessage', function(req, res, next) {
-    messageServer.sendKFMessage(req.body);
+    let response = res;
+    messageServer.sendKFMessage(req.body,function (params) {
+        response.send({code:0,msg:'OK'});
+    });
 });
 
 module.exports = router;
