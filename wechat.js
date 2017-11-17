@@ -15,7 +15,6 @@ var config = {
 function initwechat(app) {
     app.use('/', wechat(config, function (req, res, next) {
         var message = req.weixin;
-        console.log('message',message);
         if(message.EventKey=="MC_CASE_SUPPORT")
         {
             messageServer.sendKFMessage({
@@ -61,6 +60,12 @@ function initwechat(app) {
             }
             else{
                 res.reply({type: "text", content: '小罗在学习中，还不明白你说的是什么!'});
+            }
+        }
+        if(message.MsgType=="event")
+        {
+            if(message.Event=="subscribe"){
+                res.reply({type: "text", content: '欢迎来到哈罗美云，开启您的新体验!'});
             }
         }
     }));

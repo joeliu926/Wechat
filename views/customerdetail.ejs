@@ -11,6 +11,7 @@
         <div class="search-right">来源</div>
         <div style="float: right;">
             <select id="origin" class="search-input" style="width:300px; text-align: right; ">
+                <option <%=detailInfo.source==0?"selected":""%> value ="0">请选择</option>
                 <%initData.origin.forEach(function(data){ %>
                 <option <%=detailInfo.source==data.code?"selected":""%> value ="<%=data.code%>"><%=data.name%></option>
                 <% }) %>
@@ -68,6 +69,7 @@
         <div class="search-right">意向需求</div>
         <div style="float: right;">
             <select class="search-input" id="product" style="width:300px; text-align: right; ">
+                <option <%=detailInfo.source==0?"selected":""%> value ="0">请选择</option>
                 <%if(initData.proList.length>0){initData.proList.forEach(function(data){ if(initData.proList.length>0){ %>
                     <option <%=detailInfo.customerDemand==data.productCode?"selected":""%> value ="<%=data.productCode%>"><%=data.productName%></option>
                 <% }})} %>
@@ -78,6 +80,7 @@
     <div onclick="navtodeail(0)" class="search-detail-list">
         <div class="search-right">顾客照片</div>
         <div  style="float: right; text-align: right; width: 60%;">
+            <span><%=initData.customPhoto?initData.customPhoto.length:''%>张</span>
             <%if(initData.customPhoto.length>0){initData.customPhoto.reverse().forEach(function(data,i){ if(i<3){%>
             <%=data.value%>
                 <img style="width: 100px;height: 100px;" src="<%=data%>"/>
@@ -96,6 +99,7 @@
     <div  onclick="navtodeail(1)" class="search-detail-list">
         <div class="search-right">沟通记录备忘</div>
         <div  style="float: right; text-align: right; width: 60%;">
+            <span><%=initData.chatPhoto?initData.chatPhoto.length:0%>张</span>
             <%initData.chatPhoto.reverse().forEach(function(data,i){ if(i<3){%>
             <%=data.value%>
             <img style="width: 100px;height: 100px;" src="<%=data%>"/>
@@ -111,16 +115,31 @@
     </div>
 
     <div style=" margin-top: 30px;  padding: 20px; text-align: center; position: relative;height: 90px; border-bottom: 1px solid #e8e8e8; ">
-        <div type="button" onclick="updateInfo()" style="line-height: 70px;display: inline-block;font-size: 32px;color:#fff; height: 80px;width: 400px; background-color: #9083ed; border-radius: 40px;" >提交</div>
+        <div type="button" onclick="submit()" style="line-height: 70px;display: inline-block;font-size: 32px;color:#fff; height: 80px;width: 400px; background-color: #9083ed; border-radius: 40px;" >提交</div>
     </div>
 </div>
 
 <script type="application/javascript">
     function navtodeail(thisObj) {
-        window.location.href = "./photolist?id=<%=detailInfo.id%>"+"_"+thisObj;
+        updateInfo(function () {
+            window.location.href = "./photolist?id=<%=detailInfo.id%>"+"_"+thisObj;
+        });
     }
 
-    function updateInfo() {
+    function submit() {
+        updateInfo(function () {
+            window.location.href = "./list?Date="+GetQueryString('Date');
+        });
+    }
+
+    function GetQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
+
+    function updateInfo(cb) {
         let cid = '<%=detailInfo.id%>';
         let origin =document.getElementById('origin').value;
         let customerName =document.getElementById('customerName').value;
@@ -161,7 +180,7 @@
                 //保证请求已经完成，且响应已经就绪
                 //4.接受响应
                 var data = xhr.responseText ;
-                window.location.href = "./list?Date=";
+                cb&&cb();
             }
         };
     }

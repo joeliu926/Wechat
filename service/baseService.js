@@ -3,7 +3,8 @@ var httpClient=require('../utils/httpClient');
 var appUtil=require('../utils/appUtils');
 var weChatAPI=require('../config/weChatAPI');
 var menuconfig=require('../public/menu');
-var accesstoken=require('../public/access_token.json');
+//var accesstoken=require('../public/access_token.json');
+var accesstoken=require('../utils/accessToken');
 var fileUtil=require('../utils/fileUtils');
 var sessionAgent = require('../utils/sessionAgent');
 
@@ -17,7 +18,7 @@ function getmenu(req, res, next){
     console.log("get menu --------");
     defualtCfg.method="GET";
     var opt=appUtil.extend({},defualtCfg);
-    opt.url+=weChatAPI.menu.getmenu.url;
+    opt.url+=weChatAPI.menu.getmenu();
     console.log(opt.url);
     opt.callBack=function(error, response, body){
         if(error)
@@ -57,7 +58,7 @@ function getuserinfo(openid,resolves,rejects){
     let reject=rejects;
     defualtCfg.method="GET";
     var opt=appUtil.extend({},defualtCfg);
-    opt.url+=weChatAPI.userinfo.url.replace("_OPENID_",openid);
+    opt.url+=weChatAPI.userinfo().replace("_OPENID_",openid);
     opt.callBack=function(error,response, body){
         if(error)
         {
@@ -72,11 +73,18 @@ function getuserinfo(openid,resolves,rejects){
 }
 
 function gettoken(req, res, next){
-    var tokenUpdateTime=accesstoken.last_update_time;
+    var tokenUpdateTime=accesstoken.getlast_update_time();
+
+    console.log('tokenUpdateTime',tokenUpdateTime);
+
     if(!tokenUpdateTime||new Date(tokenUpdateTime)=="Invalid Date"){
+        console.log('return false',new Date(tokenUpdateTime));
         return false;
     }
-    var timeDiff= new Date().getTime()-(new Date(accesstoken.last_update_time).getTime());
+    var timeDiff= new Date().getTime()-(new Date(tokenUpdateTime).getTime());
+
+    console.log('timeDiff',timeDiff);
+    console.log('accesstoken.token_diff_time',accesstoken.token_diff_time);
     if(timeDiff>accesstoken.token_diff_time){
         defualtCfg.method="GET";
         var opt=appUtil.extend({},defualtCfg);
@@ -89,8 +97,10 @@ function gettoken(req, res, next){
             }
             else {
                 var sPath='public/access_token.json';
-                accesstoken.last_update_time=new Date().getTime();
-                accesstoken.access_token=JSON.parse(body).access_token;
+                //accesstoken.last_update_time=new Date().getTime();
+                //accesstoken.access_token=JSON.parse(body).access_token;
+                accesstoken.setlast_update_time(new Date().getTime());
+                accesstoken.setaccessToken(JSON.parse(body).access_token);
                 fileUtil.writeJSON(sPath,JSON.stringify(accesstoken));
             }
         }

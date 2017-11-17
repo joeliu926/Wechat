@@ -31,7 +31,7 @@ router.get('/detail', function(req, res, next) {
         var pmsProList = new Promise(function (resolve) {
             defualtCfg.method="GET";
             var opt=appUtil.extend({},defualtCfg)
-            opt.url+=`/product/list?unionid=${userInfo.unionid}`;
+            opt.url+=`/product/list?unionid=${userInfo.unionid}&all=0`;
             opt.callBack=function(error, response, body){
                 if(error)
                 {
@@ -48,7 +48,6 @@ router.get('/detail', function(req, res, next) {
                                 });
                             })
                         })
-
                         initData.proList =prouList;
                     }
                     resolve();

@@ -19,8 +19,13 @@ router.get('/list', function(req, res, next) {
     }
 
     baseServer.afterAuthorized(req, res, next,function (userInfo) {
-        let _startD_str = req.query.Date?req.query.Date.split("_")[0]:"";
-        let _endD_str = req.query.Date?req.query.Date.split("_")[1]:"";
+        let _toDay = new Date();
+        let _sevenDay =   new Date(_toDay.getTime() - (6 * 24 * 60 * 60 * 1000));
+        let toDay = _toDay.getFullYear()+"-"+(_toDay.getMonth()+1)+"-"+_toDay.getDate();
+        let sevenDay = _sevenDay.getFullYear()+"-"+(_sevenDay.getMonth()+1)+"-"+_sevenDay.getDate();
+
+        let _startD_str = req.query.Date?req.query.Date.split("_")[0]:sevenDay;
+        let _endD_str = req.query.Date?req.query.Date.split("_")[1]:toDay;
         let _startD = _startD_str?Date.parse(_startD_str):"";
         let _endD = _endD_str?Date.parse(_endD_str):"";
 

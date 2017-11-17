@@ -16,7 +16,7 @@ var defualtCfg={
 function getmenu(req, res, next){
     defualtCfg.method="get";
     var opt=appUtil.extend({},defualtCfg);
-    opt.url+=weChatAPI.menu.getmenu.url;
+    opt.url+=weChatAPI.menu.getmenu();
     console.log(opt.url);
     opt.callBack=function(error, response, body){
         if(error)
@@ -33,7 +33,7 @@ function getmenu(req, res, next){
 function setmenu(req, res, next){
     defualtCfg.method="POST";
     var opt=appUtil.extend({},defualtCfg);
-    opt.url+=weChatAPI.menu.setmenu.url;
+    opt.url+=weChatAPI.menu.setmenu();
     opt.data=menuconfig;
     opt.callBack=function(error, response, body){
         if(error)
@@ -51,7 +51,7 @@ function setcharactermenu(req, res, next){
     defualtCfg.method="POST";
     var opt=appUtil.extend({},defualtCfg);
     opt.data=menuconfig;
-    opt.url+=weChatAPI.menu.setconditional.url;
+    opt.url+=weChatAPI.menu.setconditional();
     opt.callBack=function(error, response, body){
         if(error)
         {

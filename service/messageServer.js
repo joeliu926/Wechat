@@ -9,9 +9,9 @@ var defualtCfg={
 };
 
 function sendKFMessage(data,cb){
-    defualtCfg.method=weChatAPI.message.sendkfmsg.method;
+    defualtCfg.method="POST";
     var opt=appUtil.extend({},defualtCfg);
-    opt.url+=weChatAPI.message.sendkfmsg.url;
+    opt.url+=weChatAPI.message.sendkfmsg();
     opt.data= data;
     opt.callBack=function(error, response, body){
         if(error)
