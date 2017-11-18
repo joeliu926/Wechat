@@ -65,7 +65,7 @@ function initwechat(app) {
         if(message.MsgType=="event")
         {
             if(message.Event=="subscribe"){
-                res.reply({type: "text", content: '欢迎来到哈罗美云，开启您的新体验!'});
+                res.reply({type: "text", content: '欢迎关注哈罗助手，请发送六位验证码进行身份验证.'});
             }
         }
     }));
