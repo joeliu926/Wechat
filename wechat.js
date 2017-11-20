@@ -5,6 +5,7 @@ var wechat = require('wechat');
 var messageServer=require('./service/messageServer');
 var userBindServer=require('./service/userBindServer');
 var baseServer=require('./service/baseService');
+var tulinChat = require('./service/tulinChatServer');
 var config = {
     token: 'rkylinmclocationt201711061327',
     appid: 'wx1d024d4ce5f7e303',
@@ -24,8 +25,8 @@ function initwechat(app) {
                 {
                     "title":"哈罗小助手",
                     "appid":"wx0d601009b9b6ac71",
-                    "pagepath":"/page/index",
-                    "thumb_media_id":"YZ8K_s8kxr51ol-iIJch1Edny09HJ4Ie_mgaYc3HDlbFWHtr9rqtJUPMYTOs7vBM"
+                    "pagepath":"/pages/home/home?init=true",
+                    "thumb_media_id":"421uwH5rd-4A_c5pmCoHjpa4kWTvI9DtMHCq7ZpK73M"
                 }
             },function (params) {
                 console.log('params',params);
@@ -36,7 +37,8 @@ function initwechat(app) {
 
         if(message.MsgType=="text")
         {
-            if(message.Content.length==6){
+            let isvirfcode =/^\d+$/.test(message.Content);
+            if(message.Content.length==6&&isvirfcode){
                 baseServer.getuserinfo(message.FromUserName,function (ars) {
                     userBindServer.bindUser(ars,message.Content,function (resobj) {
                         //console.log('resobj.code',resobj);
@@ -59,7 +61,10 @@ function initwechat(app) {
                 });
             }
             else{
-                res.reply({type: "text", content: '小罗在学习中，还不明白你说的是什么!'});
+                tulinChat.send({info:message.Content},function (message) {
+                    res.reply({type: "text", content: message});
+                    //res.reply({type: "text",content:'图灵机器人连接测试中'});
+                })
             }
         }
         if(message.MsgType=="event")
