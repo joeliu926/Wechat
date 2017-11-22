@@ -5,3 +5,6 @@ dist/
 *.log
 *.key
 wechat_config.js
+dev_wechat_config.js
+test_wechat_config.js
+dist_wechat_config.js

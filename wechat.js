@@ -6,12 +6,14 @@ var messageServer=require('./service/messageServer');
 var userBindServer=require('./service/userBindServer');
 var baseServer=require('./service/baseService');
 var tulinChat = require('./service/tulinChatServer');
-var config = {
+var config = require('./config/wechat_config');
+
+ /*{
     token: 'rkylinmclocationt201711061327',
     appid: 'wx1d024d4ce5f7e303',
     encodingAESKey: 'bFZKmA8BcOe3Hw64Dp8e9OXxNTVLgqVI4xsAt7bZFBg',
     checkSignature: false
-};
+};*/
 
 function initwechat(app) {
     app.use('/', wechat(config, function (req, res, next) {
@@ -41,7 +43,7 @@ function initwechat(app) {
             if(message.Content.length==6&&isvirfcode){
                 baseServer.getuserinfo(message.FromUserName,function (ars) {
                     userBindServer.bindUser(ars,message.Content,function (resobj) {
-                        //console.log('resobj.code',resobj);
+                        console.log('resobj.code',resobj);
                         resobj= JSON.parse(resobj);
                         if(resobj.code==0){
                             res.reply({type: "text", content: '恭喜您！绑定成功!'});

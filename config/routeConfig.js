@@ -3,7 +3,6 @@
  */
 
 function registor(app) {
-
     //app.use(require('../security/authentication.js'));
     var requires = [
         {
