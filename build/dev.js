@@ -9,7 +9,7 @@ var file = "./../config/constant.js";
 var data = fs.readFileSync(__dirname + file,'utf-8');
 data = data + "";
 data = data.replace(/remoteHost:('|')?.+('|")?,/g,function (word){
-    return 'remoteHost:"http://140.143.184.52",';
+    return 'remoteHost:"http://140.143.185.73",';
 });
 data = data.replace(/remotePort:('|")?.+('|")?,/g,function (word){
     return 'remotePort:"8082",';
@@ -35,5 +35,22 @@ fs.writeFileSync(__dirname + fileAppCofnig_write, dataApp, function(err){
         console.log(err);
     }else{
         console.log("wechat_config.js success! ");
+    }
+});
+
+
+//replace boot port file use regex
+var file_port = "./../bin/www";
+var data_port = fs.readFileSync(__dirname + file_port,'utf-8');
+data_port = data_port + "";
+data_port = data_port.replace(/var port = normalizePort\(process.env.PORT \|\| \'\d{4}\'\);/g,function (word){
+    return "var port = normalizePort(process.env.PORT || '8031');";
+});
+fs.writeFileSync(__dirname + file_port, data_port, function(err){
+    if(err){
+        console.log("error! " + file);
+        console.log(err);
+    }else{
+        console.log("wwww.js success! ");
     }
 });
