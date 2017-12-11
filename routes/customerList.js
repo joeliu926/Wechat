@@ -21,8 +21,10 @@ router.get('/list', function(req, res, next) {
     baseServer.afterAuthorized(req, res, next,function (userInfo) {
         let _toDay = new Date();
         let _sevenDay =   new Date(_toDay.getTime() - (6 * 24 * 60 * 60 * 1000));
-        let toDay = _toDay.getFullYear()+"-"+(_toDay.getMonth()+1)+"-"+_toDay.getDate();
-        let sevenDay = _sevenDay.getFullYear()+"-"+(_sevenDay.getMonth()+1)+"-"+_sevenDay.getDate();
+        let _dayOfTime = _toDay.getDate()>9?_toDay.getDate():'0'+_toDay.getDate();
+        let _dayEndofTIme = _sevenDay.getDate()>9?_sevenDay.getDate():'0'+_sevenDay.getDate();
+        let toDay =  _toDay.getFullYear()+"-"+(_toDay.getMonth()+1)+"-"+_dayOfTime;
+        let sevenDay =_sevenDay.getFullYear()+"-"+(_sevenDay.getMonth()+1)+"-"+_dayEndofTIme;
 
         let _startD_str = req.query.Date?req.query.Date.split("_")[0]:sevenDay;
         let _endD_str = req.query.Date?req.query.Date.split("_")[1]:toDay;
@@ -49,6 +51,7 @@ router.get('/list', function(req, res, next) {
                    opt.callBack=function(error, response, body){
                        if(error)
                        {
+
                            console.log(error);
                        }
                        else {
