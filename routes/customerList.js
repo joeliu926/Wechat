@@ -41,7 +41,7 @@ router.get('/list', function(req, res, next) {
             }
             else {
                 body=JSON.parse(body);
-               if(body.code==3004){
+               if(body.code==3004||body.data.type!=1){
                    res.render('customerList', { datalist:[] ,userInfo:'',startDate:_startD_str,endDate:_endD_str,hasBind:false});
                }
                 else{

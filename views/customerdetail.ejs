@@ -152,6 +152,15 @@
         let expectPrice =document.getElementById('expectPrice').value;
         let comment =document.getElementById('comment').value;
 
+
+        if(phoneNumber.length>1){
+                if(!/^1\d{10}$/.test(phoneNumber)){
+                    alert('手机号输入不正确！')
+                    return;
+                }
+        }
+
+
         let postobj= {
                 "id": cid,
                 "job": job,
