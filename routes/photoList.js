@@ -25,15 +25,12 @@ router.get('/photolist', function(req, res, next) {
         var opt=appUtil.extend({},defualtCfg);
         opt.url+=`/customer/browsePicture/${ids}/${types}`;
 
-        console.log("optttttttttt",opt);
-
         opt.callBack=function(error, response, body){
             if(error)
             {
                 console.log('error',error)
             }
             else {
-                console.log('bodyopo',body);
                 body= JSON.parse(body);
                  if(body.code==0){
                      res.render('photoList', {data:body.data,id:ids,type:types});

@@ -17,7 +17,7 @@
         <% }) }%>
         <div class="img-block" >
             <div onclick="uploadimge()" style="border: 2px dashed #999999;text-align: center;line-height:240px;" class="img-block-image">
-                <form style="display: none;" id="uploadForm" enctype="multipart/form-data" method="post" action="https://27478500.qcloud.la/uploadimg/api/customer/uploadPicture/">
+                <form style="display: none;" id="uploadForm" enctype="multipart/form-data" method="post" action="https://nihaomc.com/uploadimg/api/customer/uploadPicture/">
 
                 </form>
                 <input style="display: none;" type="file" accept="image/*" name="take-picture" id="take-picture"/>
@@ -90,7 +90,7 @@
                 //成功
             }, false);
             // 开始上传
-            xhr.open("POST", 'https://27478500.qcloud.la/uploadimg/api/customer/uploadPicture/'+ids+'/'+type);
+            xhr.open("POST", 'https://nihaomc.com/uploadimg/api/customer/uploadPicture/'+ids+'/'+type);
             xhr.send(vFD);
         }, file.type || 'image/png',0.5);
     };

@@ -83,8 +83,8 @@ function gettoken(req, res, next){
     }
     var timeDiff= new Date().getTime()-(new Date(tokenUpdateTime).getTime());
 
-    console.log('timeDiff',timeDiff);
-    console.log('accesstoken.token_diff_time',accesstoken.token_diff_time);
+    //console.log('timeDiff',timeDiff);
+    //console.log('accesstoken.token_diff_time',accesstoken.token_diff_time);
     if(timeDiff>accesstoken.token_diff_time){
         defualtCfg.method="GET";
         var opt=appUtil.extend({},defualtCfg);
@@ -96,6 +96,8 @@ function gettoken(req, res, next){
                 res.send(error);
             }
             else {
+
+               // console.log('JSON.parse(body).access_token',JSON.parse(body).access_token);
                 var sPath='public/access_token.json';
                 //accesstoken.last_update_time=new Date().getTime();
                 //accesstoken.access_token=JSON.parse(body).access_token;
@@ -118,7 +120,10 @@ function checkCode(req,res) {
     }
     else{
         if(!req.query.state){
-            let requrl =req.headers["x-client-proto"]+"://"+req.headers.host+"/wx"+req.originalUrl;
+            //let requrl =req.headers["x-client-proto"]+"://"+req.headers.host+"/wx"+req.originalUrl;
+
+            let requrl ="https://"+req.headers.host+"/wx"+req.originalUrl;
+
             res.redirect(weChatAPI.authorize.authorizecode.url.replace("REDIRECT_URI",requrl));
             return false;
         }

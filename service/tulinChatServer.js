@@ -42,7 +42,6 @@ function send(args,cb){
                 cb&&cb("小罗还在学习中，不明白您的意思！");
             }
             else {
-                console.log('tuling',body)
                 body = JSON.parse(body);
 
                 if(body.intent.code==4003){

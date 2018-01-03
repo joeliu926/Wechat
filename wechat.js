@@ -20,6 +20,7 @@ function initwechat(app) {
         var message = req.weixin;
         if(message.EventKey=="MC_CASE_SUPPORT")
         {
+            console.log('config.mediaID',config.mediaID);
             messageServer.sendKFMessage({
                 "touser":message.FromUserName,
                 "msgtype":"miniprogrampage",
@@ -28,7 +29,7 @@ function initwechat(app) {
                     "title":"哈罗小助手",
                     "appid":"wx0d601009b9b6ac71",
                     "pagepath":"/pages/home/home?init=true",
-                    "thumb_media_id":"421uwH5rd-4A_c5pmCoHjpa4kWTvI9DtMHCq7ZpK73M"
+                    "thumb_media_id":config.mediaID
                 }
             },function (params) {
                 console.log('params',params);

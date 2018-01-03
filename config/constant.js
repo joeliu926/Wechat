@@ -3,7 +3,7 @@
  */
 module.exports = {
     wechatHost:"https://api.weixin.qq.com",
-    remoteHost:"http://140.143.185.73",  //http://101.132.161.222:8082
+    remoteHost:"http://140.143.184.52",  //http://101.132.161.222:8082
     remotePort:"8082",
     cookie: {
         identityKey:"rky_mc_web_node",
