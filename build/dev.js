@@ -14,7 +14,7 @@ data = data.replace(/remoteHost:('|')?.+('|")?,/g,function (word){
 data = data.replace(/remotePort:('|")?.+('|")?,/g,function (word){
     return 'remotePort:"8082",';
 });
-fs.writeFileSync(localdir + file, data, function(err){
+fs.writeFile(localdir + file, data, function(err){
     if(err){
         console.log("error! " + file);
         console.log(err);
@@ -26,10 +26,10 @@ fs.writeFileSync(localdir + file, data, function(err){
 //replace current file from local file
 var fileAppCofnig_read = "/build/dev_wechat_config.js";
 var fileAppCofnig_write = "/config/wechat_config.js";
-var dataApp = fs.readFile(localdir + fileAppCofnig_read,'utf-8');
+var dataApp = fs.readFileSync(localdir + fileAppCofnig_read,'utf-8');
 dataApp = dataApp + "";
 
-fs.writeFileSync(localdir + fileAppCofnig_write, dataApp, function(err){
+fs.writeFile(localdir + fileAppCofnig_write, dataApp, function(err){
     if(err){
         console.log("error! " + file);
         console.log(err);
@@ -40,13 +40,13 @@ fs.writeFileSync(localdir + fileAppCofnig_write, dataApp, function(err){
 
 
 //replace boot port file use regex
-var file_port = "./../bin/www";
-var data_port = fs.readFile(__dirname + file_port,'utf-8');
+var file_port = "/bin/www";
+var data_port = fs.readFileSync(localdir + file_port,'utf-8');
 data_port = data_port + "";
 data_port = data_port.replace(/var port = normalizePort\(process.env.PORT \|\| \'\d{4}\'\);/g,function (word){
     return "var port = normalizePort(process.env.PORT || '8031');";
 });
-fs.writeFileSync(__dirname + file_port, data_port, function(err){
+fs.writeFile(localdir + file_port, data_port, function(err){
     if(err){
         console.log("error! " + file);
         console.log(err);

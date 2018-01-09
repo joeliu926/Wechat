@@ -37,9 +37,9 @@ app.use(function(req, res, next) {
   next();
 });
 
-/*
+
  //验证初始化
- app.use(function(req, res, next) {
+ /*app.use(function(req, res, next) {
  validateToken(req,res)
  });
  var url = require("url");
@@ -62,7 +62,7 @@ app.use(function(req, res, next) {
  var oriArray = new Array();
  oriArray[0] = nonce;
  oriArray[1] = timestamp;
- oriArray[2] = "rkylinmcwechat201711221127";//这里是你在微信开发者中心页面里填的token，而不是****
+ oriArray[2] = "rkylinmclocationt201711061327";//这里是你在微信开发者中心页面里填的token，而不是****
  oriArray.sort();
  var original = oriArray.join('');
  var scyptoString = sha1(original);

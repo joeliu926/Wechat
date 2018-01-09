@@ -8,7 +8,7 @@
     {
       "type": "view",
       "name": "客户中心",
-      "url":"https://nihaomc.com/wx/customer/list"
+      "url":"https://nihaomc.com/wx_test/customer/list"
     }
   ]
 }

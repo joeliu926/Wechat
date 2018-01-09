@@ -89,15 +89,16 @@ function gettoken(req, res, next){
         defualtCfg.method="GET";
         var opt=appUtil.extend({},defualtCfg);
         opt.url+=weChatAPI.accesstoken.url;
-        console.log(opt.url);
+        //console.log(opt.url);
         opt.callBack=function(error, response, body){
             if(error)
             {
+                console.log('error',error);
                 res.send(error);
             }
             else {
-
-               // console.log('JSON.parse(body).access_token',JSON.parse(body).access_token);
+                //console.log('JSON.parse(body).access_token--------body',body);
+                //console.log('JSON.parse(body).access_token',JSON.parse(body).access_token);
                 var sPath='public/access_token.json';
                 //accesstoken.last_update_time=new Date().getTime();
                 //accesstoken.access_token=JSON.parse(body).access_token;
@@ -123,6 +124,8 @@ function checkCode(req,res) {
             //let requrl =req.headers["x-client-proto"]+"://"+req.headers.host+"/wx"+req.originalUrl;
 
             let requrl ="https://"+req.headers.host+"/wx"+req.originalUrl;
+
+            console.log('requrl',requrl);
 
             res.redirect(weChatAPI.authorize.authorizecode.url.replace("REDIRECT_URI",requrl));
             return false;

@@ -13,6 +13,8 @@ function sendKFMessage(data,cb){
     var opt=appUtil.extend({},defualtCfg);
     opt.url+=weChatAPI.message.sendkfmsg();
     opt.data= data;
+
+    console.log('opt---------------',opt);
     opt.callBack=function(error, response, body){
         if(error)
         {
