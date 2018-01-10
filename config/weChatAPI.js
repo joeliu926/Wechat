@@ -50,6 +50,10 @@ var config={
            // method:"POST",
             return "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token="+accessToken.getaccessToken();
         },
+        sendtemplatemsg:function () {
+            // method:"POST",
+            return "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="+accessToken.getaccessToken();
+        },
         kfaccountadd:function () {
            // method:"POST",
             return "https://api.weixin.qq.com/customservice/kfaccount/add?access_token="+accessToken.getaccessToken();

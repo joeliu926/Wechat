@@ -11,5 +11,11 @@ router.post('/sendmessage', function(req, res, next) {
         response.send({code:0,msg:'OK'});
     });
 });
+router.post('/sendtemplatemsg', function(req, res, next) {
+    let response = res;
+    messageServer.sendtemplatemsg(req.body,function (params) {
+        response.send({code:0,msg:'OK'});
+    });
+});
 
 module.exports = router;
