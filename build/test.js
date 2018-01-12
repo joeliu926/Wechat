@@ -8,20 +8,13 @@ var localdir =path.resolve(__dirname, '..');
 var data = fs.readFileSync(localdir + file,'utf-8');
 data = data + "";
 
-/*
+
 data = data.replace(/remoteHost:('|')?.+('|")?,/g,function (word){
     return 'remoteHost:"http://140.143.185.73",';
 });
-data = data.replace(/remotePort:('|")?.+('|")?,/g,function (word){
-    return 'remotePort:"8083",';
-});
-*/
 
-data = data.replace(/remoteHost:('|')?.+('|")?,/g,function (word){
-    return 'remoteHost:"http://127.0.0.1",';
-});
 data = data.replace(/remotePort:('|")?.+('|")?,/g,function (word){
-    return 'remotePort:"8082",';
+    return 'remotePort:"8086",';
 });
 
 fs.writeFile(localdir + file, data, function(err){
