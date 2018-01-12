@@ -11,6 +11,8 @@ var defualtCfg={
 function sendKFMessage(data,cb){
     defualtCfg.method="POST";
     var opt=appUtil.extend({},defualtCfg);
+
+    console.log('data',data);
     opt.url+=weChatAPI.message.sendkfmsg();
     opt.data= data;
 

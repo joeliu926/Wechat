@@ -8,12 +8,12 @@ var baseServer=require('./service/baseService');
 var tulinChat = require('./service/tulinChatServer');
 var config = require('./config/wechat_config');
 
- /*{
-    token: 'rkylinmclocationt201711061327',
-    appid: 'wx1d024d4ce5f7e303',
-    encodingAESKey: 'bFZKmA8BcOe3Hw64Dp8e9OXxNTVLgqVI4xsAt7bZFBg',
-    checkSignature: false
-};*/
+/*{
+ token: 'rkylinmclocationt201711061327',
+ appid: 'wx1d024d4ce5f7e303',
+ encodingAESKey: 'bFZKmA8BcOe3Hw64Dp8e9OXxNTVLgqVI4xsAt7bZFBg',
+ checkSignature: false
+ };*/
 
 function initwechat(app) {
     app.use('/', wechat(config, function (req, res, next) {
@@ -21,20 +21,21 @@ function initwechat(app) {
         if(message.EventKey=="MC_CASE_SUPPORT")
         {
             console.log('config.mediaID',config.mediaID);
+            console.log('config.appid',config.appid);
             messageServer.sendKFMessage({
                 "touser":message.FromUserName,
                 "msgtype":"miniprogrampage",
                 "miniprogrampage":
                 {
-                    "title":"哈罗小助手",
+                    "title":"欢颜小助手",
                     "appid":"wx0d601009b9b6ac71",
-                    "pagepath":"/pages/home/home?init=true",
+                    "pagepath":"/pages/index/home?init=true",
                     "thumb_media_id":config.mediaID
                 }
             },function (params) {
                 console.log('params',params);
             });
-            res.reply({type: "text", content: '欢迎使用案例助手!'});
+            res.reply({type: "text", content: '欢迎使用欢颜小助手!'});
             return;
         }
 
