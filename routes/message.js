@@ -8,13 +8,13 @@ var messageServer=require('../service/messageServer');
 router.post('/sendmessage', function(req, res, next) {
     let response = res;
     messageServer.sendKFMessage(req.body,function (params) {
-        response.send({code:0,msg:'OK'});
+        response.send({code:0,msg:'OK',params:params});
     });
 });
 router.post('/sendtemplatemsg', function(req, res, next) {
     let response = res;
     messageServer.sendtemplatemsg(req.body,function (params) {
-        response.send({code:0,msg:'OK'});
+        response.send({code:0,msg:'OK',params:params});
     });
 });
 

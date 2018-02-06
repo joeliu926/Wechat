@@ -14,7 +14,7 @@ data = data.replace(/remoteHost:('|')?.+('|")?,/g,function (word){
 });
 
 data = data.replace(/remotePort:('|")?.+('|")?,/g,function (word){
-    return 'remotePort:"8083",';
+    return 'remotePort:"8086",';
 });
 
 fs.writeFile(localdir + file, data, function(err){

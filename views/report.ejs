@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>数据分析</title>
+    <meta name="viewport" content="inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <meta charset="utf-8">
+</head>
+
+<link rel='stylesheet' href='../stylesheets/report/index.css' />
+
+<body style="margin: 0px;">
+<div class="content-empty" j-style="{{report.topTab==3?'':'display:none'}};" j-book="report.topTab">
+    <div style="height: 100px;line-height: 100px;font-size: 34px;vertical-align: middle;display: block;text-align: center;margin-top: 300px;">
+        您暂无权限，请联系诊所开通帐号!
+    </div>
+</div>
+<div class="topcontent" j-style="{{report.topTab!=3?'':'display:none'}};"  j-book="report.topTab">
+    <div  onclick="report.clickTopTab()" class="topTab">
+        <span j-style="{{report.topTab?'':'color:#8678EB'}};" j-book="report.topTab">潜客分析</span>
+        <span j-style="{{report.topTab?'display:none':''}}width:50px;border-bottom:10px solid #8678EB;position: absolute;bottom: 0px;left:45%;" j-book="report.topTab"></span>
+    </div><div  onclick="report.clickTopTab()"  class="topTab">
+        <span j-style="{{report.topTab?'color:#8678EB':''}};" j-book="report.topTab">项目分析</span>
+        <span j-style="{{report.topTab?'':'display:none'}}width:50px;border-bottom:10px solid #8678EB;position: absolute;bottom: 0px;left:45%;" j-book="report.topTab"></span>
+    </div>
+</div>
+<div j-style="{{report.topTab==0?'':'display:none'}};background-color: white;" j-book="report.topTab">
+    <div>
+        <div style="font-size: 40px;padding:50px 50px 0 40px;" j-book="report.userName" j-bind></div>
+        <div style="text-align: center;margin-top: 50px;">
+            <span style="font-size: 35px;display: block;color:#999;">潜客总数</span>
+            <span style="font-size: 65px;display: block;" j-bind j-book="report.userAll"></span>
+        </div>
+        <div style="margin-top: 50px;">
+            <div style="text-align: center;display: inline-block;width: 30%">
+                <span style="font-size: 35px;display: block;color:#999;">有过反馈</span>
+                <span style="font-size: 60px;display: block;" j-bind j-book="report.userHasR"></span>
+            </div><div style="text-align: center;display: inline-block;width: 40%">
+                <span style="font-size: 35px;display: block;color:#999;">有手机号</span>
+                <span style="font-size: 60px;display: block;" j-bind j-book="report.userHasPhone"></span>
+            </div><div style="text-align: center;display: inline-block;width: 30%">
+                <span style="font-size: 35px;display: block;color:#999;">已经约到店</span>
+                <span style="font-size: 60px;display: block;" j-bind j-book="report.userHasBook"></span>
+            </div>
+        </div>
+        <div style="margin: 80px 0 50px 0; text-align: center;font-size: 30px;">
+            <span style="color:#999;">▪统计今日0:00到当前数量</span>
+        </div>
+    </div>
+
+    <div style="background-color: #F5F5F5;height: 30px;">
+    </div>
+
+    <div>
+        <div style="margin: 50px;">
+            <div style="width:50%;display: inline-block;text-align: right;">
+                <span  onclick="report.clickchartTab(0)" j-class="{{report.chartTab==0?'dateTabslt':'dateTab'}}" j-book="report.chartTab">7天</span>
+            </div><div style="width:50%;display: inline-block;">
+                <span  onclick="report.clickchartTab(1)"  j-class="{{report.chartTab==1?'dateTabslt':'dateTab'}}"  j-book="report.chartTab">30天</span>
+            </div>
+        </div>
+
+        <div style="margin: 50px;">
+            <div style="width:50%;display: inline-block;text-align: right; font-size: 35px;color:#999;">
+                <input type="date" j-bind j-book="report.startTime" onchange="report.changeST(this,event)" style="height: 60px;width: 290px;font-size: 38px;color:#666;"/>&nbsp;至&nbsp;
+            </div><div style="width:50%;display: inline-block;">
+                <input j-bind j-book="report.endTime"  onchange="report.changeET(this,event)" style="height: 60px;width: 290px;font-size: 38px;color:#666;" type="date"/>
+            </div>
+        </div>
+
+        <div style="position: relative; padding-right:-300px;">
+            <div id="containerUser" j-style="margin-bottom: 50px; display:{{report.CharListHasData?'':'none'}}" j-book="report.CharListHasData"></div>
+            <div j-style="margin-bottom: 50px; display:{{report.CharListHasData?'':'none'}};position:absolute;width:100%;height:600px;top:0px;left:0px;" j-book="report.CharListHasData"></div>
+            <div j-style="margin-bottom: 50px; display:{{report.CharListHasData?'none':''}};text-align:center;font-size: 35px;" j-book="report.CharListHasData">
+                暂无数据！
+            </div>
+        </div>
+    </div>
+
+    <div j-style="position: relative;border-top:1px solid #999; display:{{report.userType==0?'':'none'}}"  j-book="report.userType">
+        <div style="font-size: 40px;padding:50px 50px 0 40px;">咨询师排名</div>
+        <div style="padding-left: 4%;margin-top: 30px;">
+            <span j-class="{{report.sortTab==0?'sortTabslt':'sortTab'}}" j-book="report.sortTab" onclick="report.clicksortTab(0)">潜客总数</span>
+            <span j-class="{{report.sortTab==1?'sortTabslt':'sortTab'}}" j-book="report.sortTab" onclick="report.clicksortTab(1)">有过反馈</span>
+            <span j-class="{{report.sortTab==2?'sortTabslt':'sortTab'}}" j-book="report.sortTab" onclick="report.clicksortTab(2)">有手机号</span>
+            <span j-class="{{report.sortTab==3?'sortTabslt':'sortTab'}}" j-book="report.sortTab" onclick="report.clicksortTab(3)">已约到店</span>
+        </div>
+
+        <div j-for="sortUserDetail in report.sortList" j-book="report.sortList" style="padding:40px;font-size: 30px;">
+            <div style="margin-top:20px;">
+                <div style="display: inline-block;width: 20%;   text-overflow:ellipsis;white-space:nowrap;overflow: hidden; text-align: center;color:#999;"  j-bind j-foritem="sortUserDetail.userName"></div><div j-foritem="sortUserDetail.width" j-style="display: inline-block;width:{{sortUserDetail.width}}%;">
+                    <span class="bar"><span  j-bind j-foritem="sortUserDetail.amount"></span><span>人</span></span>
+                </div>
+            </div>
+        </div>
+        <div  j-book="report.sortList" j-style="padding:40px;text-align:center; font-size: 35px;display:{{report.sortList.length==0?'':'none'}}">
+            暂无数据
+        </div>
+        <div class="tips" onclick="report.setstore(0)"  j-style="{{report.sortTab==0&&localStorage.getItem('rkylinreportTop0')!='false'?'':'display:none;'}}left:42px;top:225px;" j-book="report.sortTab"><span>通过微信授权的数量</span><span>×</span></div>
+        <div class="tips" onclick="report.setstore(1)"  j-style="{{report.sortTab==1&&localStorage.getItem('rkylinreportTop1')!='false'?'':'display:none;'}}left:275px;top:225px;" j-book="report.sortTab"><span>求美者主动与项目有过互动的数量</span><span>×</span></div>
+        <div class="tips" onclick="report.setstore(2)"  j-style="{{report.sortTab==2&&localStorage.getItem('rkylinreportTop2')!='false'?'':'display:none;'}}left:510px;top:225px;" j-book="report.sortTab"><span>求美者通过授权手机号的数量</span><span>×</span></div>
+        <div class="tips" onclick="report.setstore(3)"  j-style="{{report.sortTab==3&&localStorage.getItem('rkylinreportTop3')!='false'?'':'display:none;'}}left:745px;top:225px;" j-book="report.sortTab"><span>已经被预约的数量</span><span>×</span></div>
+    </div>
+</div>
+
+<div j-style="{{report.topTab==1?'':'display:none'}};background-color: white;" j-book="report.topTab">
+    <div>
+        <div style="margin: 50px;">
+            <div style="width:50%;display: inline-block;text-align: right;">
+                <span  onclick="report.clickchartTabP(0)" j-class="{{report.chartTabP==0?'dateTabslt':'dateTab'}}"  j-book="report.chartTabP" >7天</span>
+            </div><div style="width:50%;display: inline-block;">
+                <span  onclick="report.clickchartTabP(1)"  j-class="{{report.chartTabP==1?'dateTabslt':'dateTab'}}"  j-book="report.chartTabP"  class="dateTab">30天</span>
+            </div>
+        </div>
+
+        <div style="margin: 50px;">
+            <div style="width:50%;display: inline-block;text-align: right; font-size: 35px;color:#999;">
+                <input type="date" j-bind j-book="report.startTimeP" onchange="report.changeSTP(this,event)" style="color:#666;height: 60px;width: 290px;font-size: 38px;"/>&nbsp;至&nbsp;
+            </div><div style="width:50%;display: inline-block;">
+                <input j-bind j-book="report.endTimeP"  onchange="report.changeETP(this,event)" style="color:#666;height: 60px;width: 290px;font-size: 38px;" type="date"/>
+            </div>
+        </div>
+    </div>
+
+    <div style="position: relative;">
+        <div style="font-size: 40px;padding:50px 50px 0 40px;">项目排名</div>
+        <div style="padding-left: 4%;margin-top: 30px;">
+            <span j-class="{{report.sortTabP==0?'sortTabslt':'sortTab'}}" j-book="report.sortTabP" onclick="report.clicksortTabP(0)">潜客总数</span>
+            <span j-class="{{report.sortTabP==1?'sortTabslt':'sortTab'}}" j-book="report.sortTabP" onclick="report.clicksortTabP(1)">有过反馈</span>
+            <span j-class="{{report.sortTabP==2?'sortTabslt':'sortTab'}}" j-book="report.sortTabP" onclick="report.clicksortTabP(2)">有手机号</span>
+            <span j-class="{{report.sortTabP==3?'sortTabslt':'sortTab'}}" j-book="report.sortTabP" onclick="report.clicksortTabP(3)">已约到店</span>
+        </div>
+
+        <div j-for="sortProDetail in report.sortListP" j-book="report.sortListP" style="padding:40px;font-size: 30px;">
+            <div style="margin-top:20px;" j-foritem="sortProDetail.age">
+                <div style="display: inline-block;width: 20%; overflow: hidden;   text-overflow:ellipsis;white-space:nowrap;text-align: center;color:#999;"  j-bind j-foritem="sortProDetail.userName"></div><div j-foritem="sortProDetail.width" j-style="display: inline-block;width:{{sortProDetail.width}}%;">
+                    <span class="bar"><span  j-bind j-foritem="sortProDetail.amount"></span><span>人</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div  j-book="report.sortListP" j-style="padding:40px;text-align:center; font-size: 35px;display:{{report.sortListP.length==0?'':'none'}}">
+            暂无数据
+        </div>
+        <div class="tips" onclick="report.setstore(0)" j-style="{{report.sortTabP==0&&localStorage.getItem('rkylinreportTop0')!='false'?'':'display:none;'}}left:45px;top:225px;" j-book="report.sortTabP"><span>通过微信授权的数量</span><span>×</span></div>
+        <div class="tips" onclick="report.setstore(1)" j-style="{{report.sortTabP==1&&localStorage.getItem('rkylinreportTop1')!='false'?'':'display:none;'}}left:275px;top:225px;" j-book="report.sortTabP"><span>求美者主动与项目有过互动的数量</span><span>×</span></div>
+        <div class="tips" onclick="report.setstore(2)" j-style="{{report.sortTabP==2&&localStorage.getItem('rkylinreportTop2')!='false'?'':'display:none;'}}left:510px;top:225px;" j-book="report.sortTabP"><span>求美者通过授权手机号的数量</span><span>×</span></div>
+        <div class="tips" onclick="report.setstore(3)" j-style="{{report.sortTabP==3&&localStorage.getItem('rkylinreportTop3')!='false'?'':'display:none;'}}left:745px;top:225px;" j-book="report.sortTabP"><span>已经被预约的数量</span><span>×</span></div>
+    </div>
+</div>
+</body>
+
+<script src="../javascripts/common/jbook.min.js"></script>
+<script src="../javascripts/common/jquery-1.8.3.min.js"></script>
+<script src="../javascripts/common/highcharts.js"></script>
+<script src="../javascripts/common/funnel.js"></script>
+<script src="../javascripts/common/highcharts-more.js"></script>
+<script src="../javascripts/common/exporting.js"></script>
+<script src="../javascripts/report/index.js"></script>
+</html>
